@@ -1,0 +1,2112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hypeif Media × Italian Mall | Social Media Growth Proposal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #010101;
+            --soft-black: #0A0A0A;
+            --white: #FDFDFD;
+            --purple: #8C31FB;
+            --blue: #2B69FC;
+            --violet: #6F2BFA;
+            --cyan: #22d3ee;
+            --muted: rgba(253, 253, 253, .62);
+            --line: rgba(253, 253, 253, .10);
+            --radius: 22px;
+            --font-display: 'Sora', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            background: radial-gradient(1400px 900px at 50% 0%, rgba(140, 49, 251, .1), transparent 60%),
+                radial-gradient(1200px 800px at 80% 10%, rgba(43, 105, 252, .08), transparent 65%),
+                radial-gradient(1000px 700px at 20% 90%, rgba(34, 211, 238, .05), transparent 70%),
+                var(--black);
+            color: var(--white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: radial-gradient(rgba(253, 253, 253, .015) 1px, transparent 1px);
+            background-size: 160px 160px;
+            opacity: .5;
+            mix-blend-mode: soft-light;
+            z-index: -3;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 120%, rgba(140, 49, 251, .14), transparent 58%);
+            z-index: -2;
+        }
+
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: soft-light;
+            opacity: .1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-size: 280px 280px;
+            animation: grainShift 14s steps(4) infinite;
+        }
+
+        .cursor-spotlight {
+            position: fixed;
+            width: 580px;
+            height: 580px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(140, 49, 251, .18) 0%, rgba(43, 105, 252, .12) 28%, transparent 72%);
+            filter: blur(70px);
+            mix-blend-mode: screen;
+            opacity: .8;
+            transition: opacity .4s ease;
+        }
+
+        .cursor-spotlight.hidden {
+            opacity: 0;
+        }
+
+        /* ---------- 3D LOGO INTRO ---------- */
+        #logo-intro {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            display: grid;
+            place-items: center;
+            background: radial-gradient(circle at 50% 50%, rgba(140, 49, 251, .16), transparent 55%),
+                radial-gradient(circle at 50% 50%, rgba(43, 105, 252, .1), transparent 70%),
+                var(--black);
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+            overflow: hidden;
+            perspective: 1600px;
+        }
+
+        #logo-intro.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .intro-rays {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .intro-ray {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 2px;
+            height: 60vh;
+            background: linear-gradient(to bottom, transparent, rgba(140, 49, 251, .6), transparent);
+            filter: blur(1px);
+            transform-origin: top;
+            animation: raySpin 6s linear infinite;
+            opacity: 0;
+            animation-delay: 1.6s;
+            animation-fill-mode: forwards;
+        }
+
+        .intro-ray:nth-child(2) {
+            animation-delay: 1.8s;
+            background: linear-gradient(to bottom, transparent, rgba(43, 105, 252, .5), transparent);
+            transform: rotate(45deg);
+        }
+
+        .intro-ray:nth-child(3) {
+            animation-delay: 2s;
+            background: linear-gradient(to bottom, transparent, rgba(34, 211, 238, .4), transparent);
+            transform: rotate(90deg);
+        }
+
+        .intro-ray:nth-child(4) {
+            animation-delay: 2.1s;
+            transform: rotate(135deg);
+        }
+
+        .intro-ray:nth-child(5) {
+            animation-delay: 2.2s;
+            transform: rotate(180deg);
+        }
+
+        .intro-ray:nth-child(6) {
+            animation-delay: 2.3s;
+            transform: rotate(225deg);
+        }
+
+        .intro-stage {
+            position: relative;
+            width: clamp(220px, 26vw, 320px);
+            height: clamp(220px, 26vw, 320px);
+            transform-style: preserve-3d;
+            animation: introStageFloat 5s ease-in-out infinite 2.4s;
+        }
+
+        .logo-3d-core {
+            position: absolute;
+            inset: 0;
+            transform-style: preserve-3d;
+            animation: logoAssemble 2.8s cubic-bezier(.25, .8, .25, 1) forwards;
+        }
+
+        .logo-face {
+            position: absolute;
+            inset: 0;
+            border-radius: 38px;
+            overflow: hidden;
+            backface-visibility: hidden;
+            box-shadow: 0 60px 140px rgba(40, 16, 80, .9);
+        }
+
+        .logo-face--front {
+            transform: translateZ(60px);
+        }
+
+        .logo-face--back {
+            transform: rotateY(180deg) translateZ(60px);
+        }
+
+        .logo-face--right {
+            transform: rotateY(90deg) translateZ(60px);
+        }
+
+        .logo-face--left {
+            transform: rotateY(-90deg) translateZ(60px);
+        }
+
+        .logo-face--top {
+            transform: rotateX(90deg) translateZ(60px);
+        }
+
+        .logo-face--bottom {
+            transform: rotateX(-90deg) translateZ(60px);
+        }
+
+        .logo-face img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: radial-gradient(circle, rgba(253, 253, 253, .02), transparent 70%);
+            filter: contrast(1.1) saturate(1.08);
+        }
+
+        .logo-holo-sheen {
+            position: absolute;
+            inset: -40% -60%;
+            background: linear-gradient(120deg, transparent 20%, rgba(34, 211, 238, .18) 40%, rgba(140, 49, 251, .22) 50%, transparent 80%);
+            transform: translateX(-80%) rotate(25deg);
+            animation: holoSheen 2.6s ease-in-out 1.6s forwards;
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+
+        .intro-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: grid;
+            place-items: center;
+        }
+
+        .intro-typewriter {
+            position: absolute;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            opacity: 0;
+            animation: typeIn 1s ease 1.4s forwards;
+        }
+
+        .intro-line {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: .56em;
+            font-size: clamp(.7rem, 1.2vw, .88rem);
+            color: rgba(253, 253, 253, .48);
+            display: flex;
+            gap: .56em;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .intro-line::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(253, 253, 253, .9) 50%, transparent 100%);
+            transform: translateX(-100%);
+            animation: sweepLine 1.6s ease 1.8s forwards;
+            mix-blend-mode: screen;
+        }
+
+        .intro-line--accent {
+            color: rgba(253, 253, 253, .7);
+            letter-spacing: .62em;
+        }
+
+        .intro-line--accent::after {
+            background: linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, .9) 50%, transparent 100%);
+        }
+
+        .intro-slash {
+            position: relative;
+            width: clamp(160px, 24vw, 280px);
+            height: 1px;
+            margin-top: 10px;
+            background: radial-gradient(circle, rgba(253, 253, 253, .5), transparent 70%);
+            opacity: 0;
+            animation: slashIn 1s ease 2.4s forwards;
+            overflow: hidden;
+        }
+
+        .intro-slash::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(140, 49, 251, .9), transparent);
+            transform: translateX(-100%);
+            animation: slashSweep 1.2s ease 2.6s forwards;
+        }
+
+        /* ---------- SPLASH ---------- */
+        #splash {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: grid;
+            place-items: center;
+            background:
+                radial-gradient(circle at 50% 38%, rgba(140, 49, 251, .3), transparent 38%),
+                radial-gradient(circle at 18% 82%, rgba(43, 105, 252, .18), transparent 46%),
+                radial-gradient(circle at 82% 72%, rgba(34, 211, 238, .14), transparent 48%),
+                var(--black);
+            transition: opacity 1s ease, visibility 1s ease;
+            overflow: hidden;
+        }
+
+        #splash.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-orbs {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .splash-orb {
+            position: absolute;
+            width: 460px;
+            height: 460px;
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: .4;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .splash-orb--one {
+            top: -180px;
+            left: -140px;
+            background: radial-gradient(circle, rgba(140, 49, 251, .9), transparent 72%);
+        }
+
+        .splash-orb--two {
+            bottom: -240px;
+            right: -160px;
+            background: radial-gradient(circle, rgba(43, 105, 252, .8), transparent 74%);
+            animation-delay: -7s;
+        }
+
+        .splash-orb--three {
+            top: 18%;
+            right: 12%;
+            width: 340px;
+            height: 340px;
+            background: radial-gradient(circle, rgba(34, 211, 238, .5), transparent 76%);
+            animation-delay: -12s;
+        }
+
+        .splash-inner {
+            text-align: center;
+            padding: 24px;
+            max-width: 920px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-frame {
+            position: relative;
+            width: clamp(160px, 20vw, 210px);
+            height: clamp(160px, 20vw, 210px);
+            margin: 0 auto 42px;
+            border-radius: 42px;
+            display: grid;
+            place-items: center;
+            animation: logoIn 1.4s cubic-bezier(.2, .8, .2, 1) both;
+        }
+
+        .logo-frame::before,
+        .logo-frame::after {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+        }
+
+        .logo-frame::before {
+            background: conic-gradient(from 120deg, rgba(140, 49, 251, .95), rgba(43, 105, 252, .95), rgba(34, 211, 238, .75), rgba(140, 49, 251, .95));
+        }
+
+        .logo-frame::after {
+            inset: 2px;
+            background: radial-gradient(circle at 50% 28%, rgba(253, 253, 253, .1), transparent 72%), var(--black);
+            border-radius: calc(42px - 2px);
+        }
+
+        .logo-glow {
+            position: absolute;
+            inset: -34%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140, 49, 251, .28), transparent 72%);
+            filter: blur(70px);
+            animation: pulseGlow 4.2s ease-in-out infinite;
+        }
+
+        .logo-img {
+            position: relative;
+            z-index: 1;
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            border-radius: calc(42px - 12px);
+            object-fit: contain;
+            background: radial-gradient(circle, rgba(253, 253, 253, .02), transparent 72%);
+            mix-blend-mode: lighten;
+            filter: contrast(1.1) saturate(1.06);
+            box-shadow: 0 46px 110px rgba(22, 12, 46, .88);
+        }
+
+        .splash-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.8rem, 9vw, 6.4rem);
+            line-height: .98;
+            font-weight: 800;
+            letter-spacing: -.052em;
+            opacity: 0;
+            animation: riseIn 1.1s .4s ease both;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--purple) 0%, var(--violet) 32%, var(--cyan) 68%, var(--blue) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 10s linear infinite;
+        }
+
+        .splash-lines {
+            margin-top: 30px;
+            color: var(--muted);
+            font-size: clamp(1.04rem, 2.6vw, 1.36rem);
+            line-height: 1.9;
+            opacity: 0;
+            animation: riseIn 1.1s .7s ease both;
+        }
+
+        .splash-cta {
+            margin-top: 52px;
+            opacity: 0;
+            animation: riseIn 1.1s 1s ease both;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 0;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--white);
+            padding: 17px 38px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 30%, rgba(253, 253, 253, .2), transparent 58%),
+                linear-gradient(120deg, var(--purple), var(--blue));
+            box-shadow: 0 24px 72px rgba(140, 49, 251, .42);
+            transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+            overflow: hidden;
+            isolation: isolate;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(253, 253, 253, .28), transparent);
+            transform: translateX(-100%);
+            transition: transform .9s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 30px 84px rgba(140, 49, 251, .56)
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid rgba(253, 253, 253, .78);
+            outline-offset: 3px
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(.98)
+        }
+
+        .btn svg {
+            transition: transform .25s ease;
+        }
+
+        .btn:hover svg {
+            transform: translateX(7px);
+        }
+
+        .splash-subtle {
+            font-size: .9rem;
+            color: rgba(253, 253, 253, .42);
+            letter-spacing: .36em;
+            text-transform: uppercase;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: .78rem;
+            letter-spacing: .26em;
+            text-transform: uppercase;
+            color: rgba(253, 253, 253, .42);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .scroll-hint-text {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .scroll-hint-text::before,
+        .scroll-hint-text::after {
+            content: "";
+            width: 26px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(253, 253, 253, .4));
+        }
+
+        .scroll-hint-text::after {
+            background: linear-gradient(90deg, rgba(253, 253, 253, .4), transparent);
+        }
+
+        .scroll-hint-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff, rgba(253, 253, 253, .4));
+            box-shadow: 0 0 0 8px rgba(140, 49, 251, .12), 0 0 40px rgba(140, 49, 251, .4);
+            animation: hintPulse 2.4s ease-in-out infinite;
+        }
+
+        /* ---------- LAYOUT ---------- */
+        main {
+            opacity: 0;
+            transition: opacity 1.2s ease
+        }
+
+        main.visible {
+            opacity: 1
+        }
+
+        section {
+            padding: clamp(90px, 14vw, 150px) 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            inset: 12% 0 auto 0;
+            height: 1px;
+            background: radial-gradient(circle, rgba(253, 253, 253, .2), transparent 72%);
+            opacity: .4;
+        }
+
+        section:first-of-type::before {
+            display: none;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .78rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(253, 253, 253, .58);
+            margin-bottom: 24px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.4rem, 7vw, 4.6rem);
+            line-height: 1.02;
+            letter-spacing: -.048em;
+            font-weight: 800;
+            margin-bottom: 22px;
+        }
+
+        .section-intro {
+            color: var(--muted);
+            max-width: 720px;
+            font-size: clamp(1.02rem, 2.2vw, 1.16rem);
+            line-height: 1.9;
+        }
+
+        /* ---------- CINEMATIC FUNNEL ---------- */
+        .funnel-scene {
+            margin-top: clamp(60px, 10vw, 96px);
+            position: relative;
+            display: grid;
+            gap: clamp(38px, 9vw, 68px);
+            perspective: 2000px;
+            transform-style: preserve-3d;
+        }
+
+        .funnel-connectors {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: none;
+        }
+
+        @media(min-width: 920px) {
+            .funnel-connectors {
+                display: block;
+            }
+        }
+
+        .connector-line {
+            position: absolute;
+            left: calc(50% + 8px);
+            width: 1px;
+            background: radial-gradient(to bottom, rgba(140, 49, 251, .8), rgba(43, 105, 252, .4), transparent);
+            filter: blur(.2px);
+            opacity: 0;
+            transition: opacity 1.2s ease, height 1.6s ease;
+        }
+
+        .connector-line.active {
+            opacity: .7;
+        }
+
+        .connector-line--one {
+            top: 190px;
+            height: 0;
+        }
+
+        .connector-line--two {
+            top: calc(190px + 420px);
+            height: 0;
+        }
+
+        .funnel-card {
+            position: relative;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: clamp(18px, 5vw, 36px);
+            align-items: start;
+            opacity: 0;
+            transform: rotateX(14deg) translateZ(-160px) translateY(80px);
+            filter: blur(10px);
+            transition: opacity 1.2s ease, transform 1.4s cubic-bezier(.2, .8, .2, 1), filter 1.2s ease;
+        }
+
+        .funnel-card.in-view {
+            opacity: 1;
+            transform: rotateX(0deg) translateZ(0) translateY(0);
+            filter: blur(0);
+        }
+
+        .funnel-card--static {
+            transform: translateY(60px);
+            filter: blur(8px);
+        }
+
+        .funnel-card--static.in-view {
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .card-rail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+            position: relative;
+        }
+
+        .card-number {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-family: var(--font-display);
+            font-weight: 700;
+            letter-spacing: .18em;
+            font-size: .9rem;
+            position: relative;
+            text-transform: uppercase;
+        }
+
+        .card-number::before,
+        .card-number::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+        }
+
+        .card-number::before {
+            padding: 1px;
+            background: radial-gradient(circle, rgba(253, 253, 253, .36), transparent 70%),
+                radial-gradient(circle, rgba(140, 49, 251, .8), rgba(43, 105, 252, .6));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .card-number::after {
+            inset: 4px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(140, 49, 251, .26), transparent 70%),
+                radial-gradient(circle at 50% 0%, rgba(253, 253, 253, .12), transparent 70%);
+            box-shadow: 0 30px 70px rgba(140, 49, 251, .26);
+        }
+
+        .card-number span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff, rgba(253, 253, 253, .4));
+            box-shadow: 0 0 0 10px rgba(140, 49, 251, .12), 0 0 60px rgba(140, 49, 251, .4);
+        }
+
+        .funnel-card-body {
+            position: relative;
+            border-radius: calc(var(--radius) + 6px);
+            border: 1px solid transparent;
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            transform-style: preserve-3d;
+            transition: transform .4s ease, box-shadow .4s ease;
+        }
+
+        .funnel-card-body::before,
+        .funnel-card-body::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .funnel-card-body::before {
+            padding: 1px;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .32), transparent 72%),
+                radial-gradient(circle at bottom, rgba(140, 49, 251, .42), transparent 82%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .funnel-card-body::after {
+            background: radial-gradient(circle at 20% 0%, rgba(140, 49, 251, .18), transparent 60%),
+                radial-gradient(circle at 80% 0%, rgba(43, 105, 252, .14), transparent 62%),
+                linear-gradient(180deg, rgba(253, 253, 253, .06) 0%, rgba(253, 253, 253, .02) 100%);
+        }
+
+        .funnel-card-body:hover {
+            transform: translateY(-10px) rotateX(1deg);
+            box-shadow: 0 54px 120px rgba(18, 8, 42, .84);
+        }
+
+        .funnel-card--static .funnel-card-body:hover {
+            transform: translateY(-6px);
+        }
+
+        .card-light-sweep {
+            position: absolute;
+            inset: -40% -70%;
+            background: linear-gradient(120deg, transparent 30%, rgba(34, 211, 238, .14) 48%, rgba(140, 49, 251, .16) 56%, transparent 76%);
+            transform: translateX(-80%) rotate(24deg);
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        .funnel-card.in-view .card-light-sweep {
+            animation: cardSweep 1.8s ease 0.6s forwards;
+        }
+
+        .card-inner {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            gap: clamp(24px, 6vw, 38px);
+            padding: clamp(26px, 6vw, 46px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            gap: clamp(18px, 5vw, 32px);
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .card-kicker {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: .3em;
+            font-size: .8rem;
+            color: rgba(253, 253, 253, .54);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 5vw, 3.4rem);
+            letter-spacing: -.046em;
+            margin-top: 14px;
+        }
+
+        .card-sub {
+            margin-top: 14px;
+            color: var(--muted);
+            max-width: 680px;
+            line-height: 1.9;
+            font-size: clamp(1rem, 2vw, 1.06rem);
+        }
+
+        .card-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, .18);
+            background: radial-gradient(circle, rgba(253, 253, 253, .12), transparent 72%);
+            text-transform: uppercase;
+            letter-spacing: .28em;
+            font-size: .76rem;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(16px, 4vw, 22px);
+        }
+
+        .info-card {
+            position: relative;
+            border-radius: 22px;
+            border: 1px solid transparent;
+            overflow: hidden;
+            padding: clamp(20px, 4vw, 28px);
+            display: grid;
+            gap: 12px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform .35s ease, box-shadow .35s ease;
+        }
+
+        .info-card::before,
+        .info-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .info-card::before {
+            padding: 1px;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .26), transparent 72%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .info-card::after {
+            background: linear-gradient(180deg, rgba(253, 253, 253, .06) 0%, rgba(253, 253, 253, .02) 100%);
+        }
+
+        .info-card>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 38px 86px rgba(16, 8, 38, .78);
+        }
+
+        .funnel-card--static .info-card:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .info-tag {
+            justify-self: start;
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(140, 49, 251, .44);
+            background: radial-gradient(circle, rgba(253, 253, 253, .12), transparent 72%),
+                linear-gradient(90deg, rgba(140, 49, 251, .36), rgba(43, 105, 252, .3));
+            text-transform: uppercase;
+            letter-spacing: .22em;
+            font-size: .7rem;
+        }
+
+        .info-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.08rem, 2.2vw, 1.24rem);
+            letter-spacing: -.01em;
+        }
+
+        .info-text {
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: .98rem;
+        }
+
+        /* HOLO INFLUENCER */
+        .holo-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: inherit;
+        }
+
+        .holo-grid {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(34, 211, 238, .1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, .1) 1px, transparent 1px);
+            background-size: 42px 42px;
+            opacity: .16;
+            mask-image: radial-gradient(circle at top, black, transparent 78%);
+        }
+
+        .holo-scan {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(34, 211, 238, .16) 50%, transparent 100%);
+            transform: translateY(-100%);
+            animation: holoScan 7s linear infinite;
+            mix-blend-mode: screen;
+        }
+
+        /* PROOF SECTION */
+        .proof-section {
+            position: relative;
+            display: grid;
+            gap: clamp(26px, 6vw, 40px);
+            margin-top: clamp(10px, 4vw, 18px);
+        }
+
+        .proof-header {
+            display: flex;
+            justify-content: space-between;
+            gap: clamp(18px, 5vw, 32px);
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .proof-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 4vw, 2.4rem);
+            letter-spacing: -.04em;
+            margin-bottom: 12px;
+        }
+
+        .proof-sub {
+            color: var(--muted);
+            max-width: 760px;
+            line-height: 1.9;
+        }
+
+        .proof-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, .18);
+            background: radial-gradient(circle, rgba(253, 253, 253, .12), transparent 72%);
+            text-transform: uppercase;
+            letter-spacing: .28em;
+            font-size: .76rem;
+            white-space: nowrap;
+        }
+
+        .proof-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #22d3ee, rgba(34, 211, 238, .4));
+            box-shadow: 0 0 0 8px rgba(34, 211, 238, .1), 0 0 40px rgba(34, 211, 238, .4);
+        }
+
+        .proof-gallery {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: clamp(16px, 4vw, 26px);
+            align-items: stretch;
+        }
+
+        .proof-frame {
+            position: relative;
+            grid-column: 1 / 7;
+            border-radius: 26px;
+            border: 1px solid transparent;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transform: perspective(1400px) rotateY(4deg) rotateX(1deg);
+            transition: transform .6s ease, box-shadow .6s ease;
+            box-shadow: 0 60px 120px rgba(10, 6, 28, .9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .proof-frame--two {
+            grid-column: 7 / -1;
+            transform: perspective(1400px) rotateY(-6deg) rotateX(-1deg);
+            z-index: 1;
+        }
+
+        .proof-frame:hover {
+            transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-10px);
+            box-shadow: 0 70px 140px rgba(16, 10, 40, .95);
+        }
+
+        .proof-frame::before,
+        .proof-frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .proof-frame::before {
+            padding: 1px;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .32), transparent 74%),
+                radial-gradient(circle at bottom, rgba(34, 211, 238, .36), transparent 82%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .proof-frame::after {
+            background: radial-gradient(circle at 50% 0%, rgba(34, 211, 238, .16), transparent 70%);
+        }
+
+        .proof-frame-glow {
+            position: absolute;
+            inset: -30% -20%;
+            background: radial-gradient(circle, rgba(34, 211, 238, .14), transparent 70%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        .proof-frame-inner {
+            position: relative;
+            z-index: 1;
+            aspect-ratio: 9 / 16;
+            overflow: hidden;
+        }
+
+        .proof-frame-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: radial-gradient(circle at 50% 0%, rgba(34, 211, 238, .12), transparent 70%), rgba(6, 4, 18, .9);
+            filter: contrast(1.08) saturate(1.04);
+        }
+
+        .proof-frame-label {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, .2);
+            background: radial-gradient(circle, rgba(10, 6, 28, .8), rgba(10, 6, 28, .6));
+            text-transform: uppercase;
+            letter-spacing: .26em;
+            font-size: .74rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .proof-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: clamp(14px, 4vw, 18px);
+        }
+
+        .proof-stat {
+            position: relative;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            overflow: hidden;
+            padding: clamp(18px, 4vw, 24px);
+            display: grid;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .proof-stat::before,
+        .proof-stat::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .proof-stat::before {
+            padding: 1px;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .24), transparent 74%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .proof-stat::after {
+            background: linear-gradient(180deg, rgba(253, 253, 253, .06) 0%, rgba(253, 253, 253, .02) 100%);
+        }
+
+        .proof-stat>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .proof-stat-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .proof-stat-platform {
+            text-transform: uppercase;
+            letter-spacing: .24em;
+            font-size: .74rem;
+            color: rgba(253, 253, 253, .58);
+        }
+
+        .proof-stat-up {
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 211, 238, .4);
+            background: radial-gradient(circle, rgba(34, 211, 238, .18), transparent 72%);
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            font-size: .72rem;
+        }
+
+        .proof-stat-value {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.6rem);
+            letter-spacing: -.05em;
+        }
+
+        .proof-stat-text {
+            color: var(--muted);
+        }
+
+        .proof-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .proof-footer-line {
+            width: clamp(60px, 12vw, 140px);
+            height: 1px;
+            background: radial-gradient(circle, rgba(253, 253, 253, .4), transparent 70%);
+        }
+
+        .proof-footer-text {
+            text-transform: uppercase;
+            letter-spacing: .4em;
+            font-size: .8rem;
+            color: rgba(253, 253, 253, .5);
+        }
+
+        @media(max-width: 920px) {
+            .proof-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .proof-frame,
+            .proof-frame--two {
+                grid-column: 1 / -1;
+                margin-top: 0;
+                transform: none;
+            }
+
+            .proof-frame:hover {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* BUDGET */
+        .budget-panel {
+            display: none;
+        }
+
+        /* ---------- CLOSING ---------- */
+        .closing {
+            text-align: center;
+            padding-bottom: clamp(130px, 18vw, 200px);
+        }
+
+        .closing::before {
+            display: none;
+        }
+
+        .closing-inner {
+            position: relative;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: clamp(46px, 12vw, 84px) clamp(22px, 10vw, 70px);
+            border-radius: calc(var(--radius) + 8px);
+            border: 1px solid transparent;
+            background: radial-gradient(circle at top, rgba(140, 49, 251, .28), transparent 64%),
+                radial-gradient(circle at bottom, rgba(43, 105, 252, .2), transparent 70%),
+                linear-gradient(180deg, rgba(253, 253, 253, .06) 0%, rgba(253, 253, 253, .02) 100%);
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .closing-inner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: inherit;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .32), transparent 74%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .closing-inner>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .closing-orbs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .closing-orb {
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: .52;
+        }
+
+        .closing-orb--one {
+            top: -190px;
+            left: -150px;
+            background: radial-gradient(circle, rgba(140, 49, 251, .84), transparent 72%);
+        }
+
+        .closing-orb--two {
+            bottom: -230px;
+            right: -170px;
+            background: radial-gradient(circle, rgba(43, 105, 252, .76), transparent 74%);
+        }
+
+        .closing h2 {
+            max-width: 860px;
+            margin-inline: auto
+        }
+
+        .closing p {
+            margin: 22px auto 48px;
+            max-width: 680px;
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: clamp(1.02rem, 2.2vw, 1.12rem);
+        }
+
+        footer {
+            border-top: 1px solid rgba(253, 253, 253, .1);
+            padding: clamp(28px, 6vw, 40px) 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(140, 49, 251, .12), transparent 70%);
+        }
+
+        .footer-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .footer-logo::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: inherit;
+            background: radial-gradient(circle, rgba(253, 253, 253, .32), transparent 70%),
+                radial-gradient(circle, rgba(140, 49, 251, .8), rgba(43, 105, 252, .6));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .footer-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+        }
+
+        .footer-sub {
+            margin-top: 4px;
+            color: rgba(253, 253, 253, .5);
+            font-size: .9rem;
+        }
+
+        .footer-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            color: rgba(253, 253, 253, .48);
+            font-size: .9rem;
+        }
+
+        .footer-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff, rgba(253, 253, 253, .4));
+            box-shadow: 0 0 0 8px rgba(140, 49, 251, .1), 0 0 40px rgba(140, 49, 251, .3);
+        }
+
+        /* ---------- ANIMATIONS ---------- */
+        @keyframes logoAssemble {
+            0% {
+                transform: rotateX(-70deg) rotateY(160deg) scale(.4) translateZ(-400px);
+                opacity: 0;
+            }
+
+            40% {
+                opacity: 1;
+            }
+
+            70% {
+                transform: rotateX(-12deg) rotateY(20deg) scale(.9) translateZ(0);
+            }
+
+            100% {
+                transform: rotateX(0deg) rotateY(360deg) scale(1) translateZ(40px);
+            }
+        }
+
+        @keyframes introStageFloat {
+
+            0%,
+            100% {
+                transform: translateY(-6px);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        @keyframes raySpin {
+            0% {
+                opacity: 0;
+                transform: rotate(var(--rot, 0deg)) scaleY(.2);
+            }
+
+            20% {
+                opacity: .5;
+            }
+
+            100% {
+                opacity: 0;
+                transform: rotate(calc(var(--rot, 0deg) + 360deg)) scaleY(1.2);
+            }
+        }
+
+        @keyframes holoSheen {
+            to {
+                transform: translateX(120%) rotate(25deg);
+            }
+        }
+
+        @keyframes typeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes sweepLine {
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes slashIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slashSweep {
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes logoIn {
+            from {
+                opacity: 0;
+                transform: scale(.72) rotate(-12deg)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0)
+            }
+        }
+
+        @keyframes riseIn {
+            from {
+                opacity: 0;
+                transform: translateY(32px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes orbFloat {
+
+            0%,
+            100% {
+                transform: translate3d(0, 0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate3d(44px, -34px, 0) scale(1.1);
+            }
+
+            66% {
+                transform: translate3d(-34px, 24px, 0) scale(.96);
+            }
+        }
+
+        @keyframes pulseGlow {
+
+            0%,
+            100% {
+                opacity: .5;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .86;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+
+            100% {
+                background-position: 200% center;
+            }
+        }
+
+        @keyframes hintPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .8;
+            }
+
+            50% {
+                transform: scale(1.4);
+                opacity: 1;
+            }
+        }
+
+        @keyframes grainShift {
+            0% {
+                background-position: 0 0, 0 0;
+            }
+
+            25% {
+                background-position: 12px -18px, -8px 12px;
+            }
+
+            50% {
+                background-position: -14px 12px, 18px -8px;
+            }
+
+            75% {
+                background-position: 8px 18px, -12px -14px;
+            }
+
+            100% {
+                background-position: 0 0, 0 0;
+            }
+        }
+
+        @keyframes cardSweep {
+            to {
+                transform: translateX(120%) rotate(24deg);
+            }
+        }
+
+        @keyframes holoScan {
+            0% {
+                transform: translateY(-100%);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        @media(max-width: 920px) {
+            .funnel-card {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .card-rail {
+                flex-direction: row;
+                justify-content: flex-start;
+            }
+
+            .card-dot {
+                display: none;
+            }
+        }
+
+        @media(max-width: 640px) {
+            section {
+                padding: 86px 18px
+            }
+
+            .card-inner {
+                padding: 24px
+            }
+
+            .logo-frame {
+                border-radius: 34px
+            }
+
+            .logo-frame::after {
+                border-radius: calc(34px - 2px)
+            }
+
+            .logo-img {
+                border-radius: calc(34px - 12px)
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                animation: none !important;
+                transition: none !important
+            }
+
+            #splash {
+                position: relative
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="film-grain"></div>
+    <div class="cursor-spotlight hidden" id="cursorSpotlight"></div>
+
+    <!-- 3D LOGO INTRO -->
+    <div id="logo-intro">
+        <div class="intro-rays">
+            <div class="intro-ray" style="--rot: 0deg;"></div>
+            <div class="intro-ray" style="--rot: 45deg;"></div>
+            <div class="intro-ray" style="--rot: 90deg;"></div>
+            <div class="intro-ray" style="--rot: 135deg;"></div>
+            <div class="intro-ray" style="--rot: 180deg;"></div>
+            <div class="intro-ray" style="--rot: 225deg;"></div>
+        </div>
+        <div class="intro-overlay">
+            <div class="intro-typewriter">
+                <div class="intro-line">HYPEIF MEDIA</div>
+                <div class="intro-line intro-line--accent">PRESENTS</div>
+                <div class="intro-line">ITALIAN MALL</div>
+                <div class="intro-slash"></div>
+            </div>
+        </div>
+
+        <div class="intro-stage">
+            <div class="logo-3d-core">
+                <div class="logo-face logo-face--front">
+                    <img src="logo.jpg" alt="Italian Mall logo">
+                </div>
+                <div class="logo-face logo-face--back">
+                    <img src="logo.jpg" alt="Italian Mall logo">
+                </div>
+                <div class="logo-face logo-face--right">
+                    <img src="logo.jpg" alt="Italian Mall logo">
+                </div>
+                <div class="logo-face logo-face--left">
+                    <img src="logo.jpg" alt="Italian Mall logo">
+                </div>
+                <div class="logo-face logo-face--top">
+                    <img src="logo.jpg" alt="Italian Mall logo">
+                </div>
+                <div class="logo-face logo-face--bottom">
+                    <img src="logo.jpg" alt="Italian Mall logo">
+                </div>
+                <div class="logo-holo-sheen"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SPLASH PAGE -->
+    <div id="splash">
+        <div class="splash-orbs">
+            <div class="splash-orb splash-orb--one"></div>
+            <div class="splash-orb splash-orb--two"></div>
+            <div class="splash-orb splash-orb--three"></div>
+        </div>
+        <div class="splash-inner">
+            <div class="logo-frame" aria-hidden="true">
+                <div class="logo-glow"></div>
+                <img class="logo-img" src="logo.jpg" alt="Italian Mall logo" />
+            </div>
+
+            <h1 class="splash-title">
+                <span class="gradient-text">The Scroll Stops Here.</span>
+            </h1>
+
+            <p class="splash-lines">
+                Hypeif Media turns attention into engagement,<br>
+                engagement into trust, and trust into unstoppable growth.
+            </p>
+
+            <div class="splash-cta">
+                <button class="btn" onclick="enterSite()">
+                    View Growth Strategy
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                </button>
+                <span class="splash-subtle">Hypeif Media × Italian Mall</span>
+            </div>
+        </div>
+
+        <div class="scroll-hint" onclick="enterSite()">
+            <div class="scroll-hint-text">
+                <span>Click to Move Forward</span>
+            </div>
+            <div class="scroll-hint-dot"></div>
+        </div>
+    </div>
+
+    <main id="site">
+
+        <!-- FUNNEL -->
+        <section id="funnel">
+            <div class="reveal">
+                <div class="eyebrow">Hypeif Media × Italian Mall</div>
+                <h2>The Social Growth Funnel</h2>
+                <p class="section-intro">
+                    A focused, cinematic system designed to grow Italian Mall’s audience, strengthen its brand presence, and convert
+                    attention into loyal customers. Built with precision to impress from the very first glance.
+                </p>
+            </div>
+
+            <div class="funnel-scene">
+                <div class="funnel-connectors">
+                    <div class="connector-line connector-line--one"></div>
+                    <div class="connector-line connector-line--two"></div>
+                </div>
+
+                <!-- 1. QUALITY CONTENT -->
+                <article class="funnel-card" data-step="1">
+                    <div class="card-rail">
+                        <div class="card-number"><span>01</span></div>
+                        <div class="card-dot"></div>
+                    </div>
+                    <div class="funnel-card-body">
+                        <div class="card-light-sweep"></div>
+                        <div class="card-inner">
+                            <header class="card-header">
+                                <div>
+                                    <div class="card-kicker">Attract</div>
+                                    <h3 class="card-title">We Increase Quality</h3>
+                                    <p class="card-sub">Content that makes people stop, watch, and remember Italian Mall the moment it crosses their feed.</p>
+                                </div>
+                                <div class="card-badge">Stop The Scroll</div>
+                            </header>
+                            <div class="card-grid">
+                                <div class="info-card">
+                                    <span class="info-tag">Engagement</span>
+                                    <h4 class="info-title">Funny & Relatable Content</h4>
+                                    <p class="info-text">Short, humorous videos built around mall life, shopping moments, trends, and local culture designed for maximum shareability.</p>
+                                </div>
+                                <div class="info-card">
+                                    <span class="info-tag">Trust</span>
+                                    <h4 class="info-title">Owner-Led Content</h4>
+                                    <p class="info-text">The owner becomes the face of Italian Mall—sharing stories, offers, and behind-the-scenes moments that build genuine authenticity.</p>
+                                </div>
+                                <div class="info-card">
+                                    <span class="info-tag">Discovery</span>
+                                    <h4 class="info-title">Store Spotlight Reels</h4>
+                                    <p class="info-text">Fast, cinematic reels featuring stores, products, food, fashion, and experiences inside the mall to drive curiosity.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 2. DIGITAL MARKETING -->
+                <article class="funnel-card" data-step="2">
+                    <div class="card-rail">
+                        <div class="card-number"><span>02</span></div>
+                        <div class="card-dot"></div>
+                    </div>
+                    <div class="funnel-card-body">
+                        <div class="card-light-sweep"></div>
+                        <div class="card-inner">
+                            <header class="card-header">
+                                <div>
+                                    <div class="card-kicker">Amplify</div>
+                                    <h3 class="card-title">Digital Marketing</h3>
+                                    <p class="card-sub">We put budget behind content that already proves it performs. Precision over guesswork, results over reach alone.</p>
+                                </div>
+                                <div class="card-badge">Data Driven</div>
+                            </header>
+                            <div class="card-grid">
+                                <div class="info-card">
+                                    <span class="info-tag">Smart Testing</span>
+                                    <h4 class="info-title">Test Before Spending</h4>
+                                    <p class="info-text">We publish organic content first and identify the videos with the strongest watch time, saves, shares, and engagement.</p>
+                                </div>
+                                <div class="info-card">
+                                    <span class="info-tag">Paid Boost</span>
+                                    <h4 class="info-title">Boost Winning Videos</h4>
+                                    <p class="info-text">Only high-performing content receives ad spend, reducing wasted budget while scaling what is already resonating.</p>
+                                </div>
+                                <div class="info-card">
+                                    <span class="info-tag">Retargeting</span>
+                                    <h4 class="info-title">Reach Interested People</h4>
+                                    <p class="info-text">Ads reconnect with viewers who engaged with Italian Mall, guiding them towards visits, offers, and purchases.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- 3. INFLUENCERS -->
+                <article class="funnel-card funnel-card--static" data-step="3">
+                    <div class="card-rail">
+                        <div class="card-number"><span>03</span></div>
+                    </div>
+                    <div class="funnel-card-body">
+                        <div class="holo-overlay">
+                            <div class="holo-grid"></div>
+                            <div class="holo-scan"></div>
+                        </div>
+                        <div class="card-inner">
+                            <header class="card-header">
+                                <div>
+                                    <div class="card-kicker">Expand</div>
+                                    <h3 class="card-title">Influencer Marketing</h3>
+                                    <p class="card-sub">Local creators introduce Italian Mall to new, highly relevant audiences with credibility that ads simply can't buy.</p>
+                                </div>
+                                <div class="card-badge">Holographic Reach</div>
+                            </header>
+                            <div class="card-grid">
+                                <div class="info-card">
+                                    <span class="info-tag">Reach</span>
+                                    <h4 class="info-title">Local Creator Collabs</h4>
+                                    <p class="info-text">We partner with creators whose followers match Italian Mall’s ideal customers for maximum relevance.</p>
+                                </div>
+                                <div class="info-card">
+                                    <span class="info-tag">Credibility</span>
+                                    <h4 class="info-title">Authentic Recommendations</h4>
+                                    <p class="info-text">Creators showcase real visits, products, and experiences—making the mall feel familiar, desirable and trustworthy.</p>
+                                </div>
+                                <div class="info-card" style="transform: none !important; box-shadow: none;">
+                                    <span class="info-tag">Flexible Budget</span>
+                                    <h4 class="info-title">Budget-Based Strategy</h4>
+                                    <p class="info-text">We recommend influencer tiers based on Italian Mall’s comfort level, from micro-creators all the way up to larger local personalities.</p>
+                                </div>
+                            </div>
+
+                            <div class="proof-section">
+                                <div class="proof-header">
+                                    <div>
+                                        <div class="card-kicker" style="margin-bottom: 10px;">Proof In The Numbers</div>
+                                        <h4 class="proof-title">This funnel already works — here's a recent restaurant client</h4>
+                                        <p class="proof-sub">Before we talk theory for Italian Mall, look at what the same approach did for a restaurant client in the last 60 days. These are their actual dashboard numbers.</p>
+                                    </div>
+                                    <div class="proof-badge">
+                                        <span>Aug 25 – Oct 23</span>
+                                        <span class="proof-badge-dot"></span>
+                                        <span>60 Days</span>
+                                    </div>
+                                </div>
+
+                                <div class="proof-gallery">
+                                    <div class="proof-frame proof-frame--one">
+                                        <div class="proof-frame-glow"></div>
+                                        <div class="proof-frame-inner">
+                                            <img src="picture1.jpg" alt="Restaurant client TikTok & Instagram analytics dashboard" />
+                                        </div>
+                                        <div class="proof-frame-label">Platform Insights</div>
+                                    </div>
+                                    <div class="proof-frame proof-frame--two">
+                                        <div class="proof-frame-glow"></div>
+                                        <div class="proof-frame-inner">
+                                            <img src="picture2.jpg" alt="Restaurant client reach and views analytics dashboard" />
+                                        </div>
+                                        <div class="proof-frame-label">Reach & Growth</div>
+                                    </div>
+                                </div>
+
+                                <div class="proof-stats">
+                                    <div class="proof-stat">
+                                        <div class="proof-stat-head">
+                                            <span class="proof-stat-platform">TikTok</span>
+                                            <span class="proof-stat-up">+1,214.6%</span>
+                                        </div>
+                                        <strong class="proof-stat-value">339.5K</strong>
+                                        <p class="proof-stat-text">Post Views • +313.7K in 60 days</p>
+                                    </div>
+                                    <div class="proof-stat">
+                                        <div class="proof-stat-head">
+                                            <span class="proof-stat-platform">Instagram</span>
+                                            <span class="proof-stat-up">90.4% New</span>
+                                        </div>
+                                        <strong class="proof-stat-value">90,460</strong>
+                                        <p class="proof-stat-text">Content Views • 90.4% from non-followers</p>
+                                    </div>
+                                    <div class="proof-stat">
+                                        <div class="proof-stat-head">
+                                            <span class="proof-stat-platform">TikTok</span>
+                                            <span class="proof-stat-up">+331.1%</span>
+                                        </div>
+                                        <strong class="proof-stat-value">5.2K</strong>
+                                        <p class="proof-stat-text">Likes • 246 Comments • 202 Shares</p>
+                                    </div>
+                                    <div class="proof-stat">
+                                        <div class="proof-stat-head">
+                                            <span class="proof-stat-platform">Instagram</span>
+                                            <span class="proof-stat-up">Heavy Lifting</span>
+                                        </div>
+                                        <strong class="proof-stat-value">58.9K</strong>
+                                        <p class="proof-stat-text">Reel Views • 35,447 Total Viewers</p>
+                                    </div>
+                                </div>
+
+                                <div class="proof-footer">
+                                    <div class="proof-footer-line"></div>
+                                    <p class="proof-footer-text">Same funnel. New audience. Scalable to Italian Mall.</p>
+                                    <div class="proof-footer-line"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+        <!-- CLOSING -->
+        <section class="closing">
+            <div class="closing-inner reveal">
+                <div class="closing-orbs">
+                    <div class="closing-orb closing-orb--one"></div>
+                    <div class="closing-orb closing-orb--two"></div>
+                </div>
+                <div class="eyebrow">Next Step</div>
+                <h2>Let’s Make Italian Mall <span class="gradient-text">Impossible to Ignore.</span></h2>
+                <p>
+                    Hypeif Media will create the content, amplify what works, and partner with the right creators to grow
+                    Italian Mall consistently with a strategy built to convert attention into real foot traffic.
+                </p>
+                <button class="btn" onclick="alert('Thank you! Hypeif Media will follow up with the full proposal.')">
+                    Start With Hypeif Media
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                        stroke-linecap="round">
+                        <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Hypeif Media × Italian Mall logo" />
+                    </div>
+                    <div>
+                        <p class="footer-name">Hypeif Media × Italian Mall</p>
+                        <p class="footer-sub">Social Media Growth Proposal</p>
+                    </div>
+                </div>
+                <div class="footer-meta">
+                    <span>Built to turn attention into foot traffic</span>
+                    <span class="footer-dot"></span>
+                    <span>© 2026 Hypeif Media. All rights reserved.</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        const logoIntro = document.getElementById('logo-intro');
+        const splash = document.getElementById('splash');
+        const site = document.getElementById('site');
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                logoIntro.classList.add('hidden');
+                splash.classList.remove('hidden');
+            }, 3600);
+        });
+
+        function enterSite() {
+            splash.classList.add('hidden');
+            site.classList.add('visible');
+            setTimeout(() => {
+                document.getElementById('funnel').scrollIntoView({ behavior: 'smooth' });
+                animateConnectors();
+            }, 320);
+        }
+
+        const spotlight = document.getElementById('cursorSpotlight');
+        if (spotlight) {
+            window.addEventListener('mousemove', (e) => {
+                spotlight.style.left = e.clientX + 'px';
+                spotlight.style.top = e.clientY + 'px';
+                spotlight.classList.remove('hidden');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                spotlight.classList.add('hidden');
+            });
+        }
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.22, rootMargin: '0px 0px -60px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        document.querySelectorAll('.funnel-card').forEach((card, index) => {
+            revealObserver.observe(card);
+            card.style.transitionDelay = (index * 0.16) + 's';
+        });
+
+        function animateConnectors() {
+            const line1 = document.querySelector('.connector-line--one');
+            const line2 = document.querySelector('.connector-line--two');
+            setTimeout(() => {
+                if (line1) {
+                    line1.style.height = '380px';
+                    line1.classList.add('active');
+                }
+            }, 600);
+            setTimeout(() => {
+                if (line2) {
+                    line2.style.height = '380px';
+                    line2.classList.add('active');
+                }
+            }, 900);
+        }
+
+        const tiltCards = document.querySelectorAll('.funnel-card:not(.funnel-card--static) .funnel-card-body');
+        tiltCards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -3;
+                const rotateY = ((x - centerX) / centerX) * 3;
+                card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>

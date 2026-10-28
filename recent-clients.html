@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recent Client Results & Proof | Hypeif Media × Italian Mall</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --black: #010101;
+            --soft-black: #0A0A0A;
+            --white: #FDFDFD;
+            --purple: #8C31FB;
+            --blue: #2B69FC;
+            --violet: #6F2BFA;
+            --cyan: #22d3ee;
+            --muted: rgba(253, 253, 253, .62);
+            --line: rgba(253, 253, 253, .10);
+            --radius: 22px;
+            --font-display: 'Sora', sans-serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: radial-gradient(1400px 900px at 50% 0%, rgba(140, 49, 251, .12), transparent 60%),
+                radial-gradient(1200px 800px at 80% 20%, rgba(43, 105, 252, .1), transparent 65%),
+                radial-gradient(1000px 700px at 20% 80%, rgba(34, 211, 238, .08), transparent 70%),
+                var(--black);
+            color: var(--white);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: radial-gradient(rgba(253, 253, 253, .018) 1px, transparent 1px);
+            background-size: 160px 160px;
+            opacity: .5;
+            mix-blend-mode: soft-light;
+            z-index: -3;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 120%, rgba(140, 49, 251, .16), transparent 58%);
+            z-index: -2;
+        }
+
+        .film-grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: soft-light;
+            opacity: .1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-size: 280px 280px;
+            animation: grainShift 14s steps(4) infinite;
+        }
+
+        .cursor-spotlight {
+            position: fixed;
+            width: 580px;
+            height: 580px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(140, 49, 251, .18) 0%, rgba(43, 105, 252, .12) 28%, transparent 72%);
+            filter: blur(70px);
+            mix-blend-mode: screen;
+            opacity: .8;
+            transition: opacity .4s ease;
+        }
+
+        .cursor-spotlight.hidden {
+            opacity: 0;
+        }
+
+        /* TOP NAVIGATION STRIP */
+        .top-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(1, 1, 1, 0.75);
+            border-bottom: 1px solid rgba(253, 253, 253, 0.08);
+            padding: 16px 24px;
+        }
+
+        .top-nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--white);
+        }
+
+        .nav-logo {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(253, 253, 253, 0.15);
+            background: var(--soft-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nav-title {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-subtitle {
+            font-size: 0.76rem;
+            color: var(--muted);
+            letter-spacing: 0.04em;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(34, 211, 238, 0.08);
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            color: #22d3ee;
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .page-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22d3ee;
+            box-shadow: 0 0 8px #22d3ee;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, 0.2);
+            background: rgba(253, 253, 253, 0.06);
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 0.84rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-back:hover {
+            background: rgba(253, 253, 253, 0.14);
+            border-color: rgba(253, 253, 253, 0.4);
+            transform: translateX(-4px);
+        }
+
+        .btn-back svg {
+            transition: transform 0.25s ease;
+        }
+
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* MAIN CONTENT */
+        main {
+            opacity: 1;
+        }
+
+        section {
+            padding: clamp(70px, 10vw, 110px) 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        section::before {
+            content: "";
+            position: absolute;
+            inset: 0 0 auto 0;
+            height: 1px;
+            background: radial-gradient(circle, rgba(253, 253, 253, .16), transparent 72%);
+            opacity: .4;
+        }
+
+        section:first-of-type::before {
+            display: none;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: .78rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(253, 253, 253, .58);
+            margin-bottom: 24px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--purple), var(--blue));
+        }
+
+        h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.4rem, 7vw, 4.4rem);
+            line-height: 1.02;
+            letter-spacing: -.048em;
+            font-weight: 800;
+            margin-bottom: 22px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--purple) 0%, var(--violet) 32%, var(--cyan) 68%, var(--blue) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: shimmer 10s linear infinite;
+        }
+
+        .section-intro {
+            color: var(--muted);
+            max-width: 720px;
+            font-size: clamp(1.02rem, 2.2vw, 1.16rem);
+            line-height: 1.9;
+        }
+
+        /* PROOF SECTION */
+        .proof-section {
+            position: relative;
+            display: grid;
+            gap: clamp(26px, 6vw, 40px);
+            margin-top: clamp(10px, 4vw, 18px);
+        }
+
+        .proof-header {
+            display: flex;
+            justify-content: space-between;
+            gap: clamp(18px, 5vw, 32px);
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .proof-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 4vw, 2.4rem);
+            letter-spacing: -.04em;
+            margin-bottom: 12px;
+        }
+
+        .proof-sub {
+            color: var(--muted);
+            max-width: 760px;
+            line-height: 1.9;
+        }
+
+        .proof-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, .18);
+            background: radial-gradient(circle, rgba(253, 253, 253, .12), transparent 72%);
+            text-transform: uppercase;
+            letter-spacing: .28em;
+            font-size: .76rem;
+            white-space: nowrap;
+        }
+
+        .proof-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #22d3ee, rgba(34, 211, 238, .4));
+            box-shadow: 0 0 0 8px rgba(34, 211, 238, .1), 0 0 40px rgba(34, 211, 238, .4);
+        }
+
+        .proof-gallery {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: clamp(16px, 4vw, 26px);
+            align-items: stretch;
+        }
+
+        .proof-frame {
+            position: relative;
+            grid-column: 1 / 7;
+            border-radius: 26px;
+            border: 1px solid transparent;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transform: perspective(1400px) rotateY(4deg) rotateX(1deg);
+            transition: transform .6s ease, box-shadow .6s ease;
+            box-shadow: 0 60px 120px rgba(10, 6, 28, .9);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .proof-frame--two {
+            grid-column: 7 / -1;
+            transform: perspective(1400px) rotateY(-6deg) rotateX(-1deg);
+            z-index: 1;
+        }
+
+        .proof-frame:hover {
+            transform: perspective(1400px) rotateY(0deg) rotateX(0deg) translateY(-10px);
+            box-shadow: 0 70px 140px rgba(16, 10, 40, .95);
+        }
+
+        .proof-frame::before,
+        .proof-frame::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .proof-frame::before {
+            padding: 1px;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .32), transparent 74%),
+                radial-gradient(circle at bottom, rgba(34, 211, 238, .36), transparent 82%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .proof-frame::after {
+            background: radial-gradient(circle at 50% 0%, rgba(34, 211, 238, .16), transparent 70%);
+        }
+
+        .proof-frame-glow {
+            position: absolute;
+            inset: -30% -20%;
+            background: radial-gradient(circle, rgba(34, 211, 238, .14), transparent 70%);
+            filter: blur(80px);
+            pointer-events: none;
+        }
+
+        .proof-frame-inner {
+            position: relative;
+            z-index: 1;
+            aspect-ratio: 9 / 16;
+            overflow: hidden;
+        }
+
+        .proof-frame-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: radial-gradient(circle at 50% 0%, rgba(34, 211, 238, .12), transparent 70%), rgba(6, 4, 18, .9);
+            filter: contrast(1.08) saturate(1.04);
+        }
+
+        .proof-frame-label {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, .2);
+            background: radial-gradient(circle, rgba(10, 6, 28, .8), rgba(10, 6, 28, .6));
+            text-transform: uppercase;
+            letter-spacing: .26em;
+            font-size: .74rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            white-space: nowrap;
+        }
+
+        .proof-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: clamp(14px, 4vw, 18px);
+        }
+
+        .proof-stat {
+            position: relative;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            overflow: hidden;
+            padding: clamp(18px, 4vw, 24px);
+            display: grid;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(253, 253, 253, 0.02);
+        }
+
+        .proof-stat::before,
+        .proof-stat::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .proof-stat::before {
+            padding: 1px;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .24), transparent 74%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .proof-stat::after {
+            background: linear-gradient(180deg, rgba(253, 253, 253, .06) 0%, rgba(253, 253, 253, .02) 100%);
+        }
+
+        .proof-stat>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .proof-stat-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .proof-stat-platform {
+            text-transform: uppercase;
+            letter-spacing: .24em;
+            font-size: .74rem;
+            color: rgba(253, 253, 253, .58);
+        }
+
+        .proof-stat-up {
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(34, 211, 238, .4);
+            background: radial-gradient(circle, rgba(34, 211, 238, .18), transparent 72%);
+            text-transform: uppercase;
+            letter-spacing: .2em;
+            font-size: .72rem;
+            color: #22d3ee;
+            font-weight: 700;
+        }
+
+        .proof-stat-value {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 6vw, 3.6rem);
+            letter-spacing: -.05em;
+            color: var(--white);
+        }
+
+        .proof-stat-text {
+            color: var(--muted);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        .proof-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .proof-footer-line {
+            width: clamp(60px, 12vw, 140px);
+            height: 1px;
+            background: radial-gradient(circle, rgba(253, 253, 253, .4), transparent 70%);
+        }
+
+        .proof-footer-text {
+            text-transform: uppercase;
+            letter-spacing: .4em;
+            font-size: .8rem;
+            color: rgba(253, 253, 253, .5);
+        }
+
+        /* BUTTONS */
+        .btn {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 0;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--white);
+            padding: 17px 38px;
+            border-radius: 999px;
+            background: radial-gradient(circle at 30% 30%, rgba(253, 253, 253, .2), transparent 58%),
+                linear-gradient(120deg, var(--purple), var(--blue));
+            box-shadow: 0 24px 72px rgba(140, 49, 251, .42);
+            transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+            overflow: hidden;
+            isolation: isolate;
+            text-decoration: none;
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(253, 253, 253, .28), transparent);
+            transform: translateX(-100%);
+            transition: transform .9s ease;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 30px 84px rgba(140, 49, 251, .56);
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn:focus-visible {
+            outline: 3px solid rgba(253, 253, 253, .78);
+            outline-offset: 3px;
+        }
+
+        .btn:active {
+            transform: translateY(0) scale(.98);
+        }
+
+        .btn svg {
+            transition: transform .25s ease;
+        }
+
+        .btn:hover svg {
+            transform: translateX(7px);
+        }
+
+        /* CLOSING */
+        .closing {
+            text-align: center;
+            padding-bottom: clamp(100px, 14vw, 150px);
+        }
+
+        .closing::before {
+            display: none;
+        }
+
+        .closing-inner {
+            position: relative;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: clamp(46px, 12vw, 84px) clamp(22px, 10vw, 70px);
+            border-radius: calc(var(--radius) + 8px);
+            border: 1px solid transparent;
+            background: radial-gradient(circle at top, rgba(140, 49, 251, .28), transparent 64%),
+                radial-gradient(circle at bottom, rgba(43, 105, 252, .2), transparent 70%),
+                linear-gradient(180deg, rgba(253, 253, 253, .06) 0%, rgba(253, 253, 253, .02) 100%);
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+
+        .closing-inner::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: inherit;
+            background: radial-gradient(circle at top, rgba(253, 253, 253, .32), transparent 74%);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .closing-inner>* {
+            position: relative;
+            z-index: 1;
+        }
+
+        .closing-orbs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        .closing-orb {
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: .52;
+        }
+
+        .closing-orb--one {
+            top: -190px;
+            left: -150px;
+            background: radial-gradient(circle, rgba(140, 49, 251, .84), transparent 72%);
+        }
+
+        .closing-orb--two {
+            bottom: -230px;
+            right: -170px;
+            background: radial-gradient(circle, rgba(43, 105, 252, .76), transparent 74%);
+        }
+
+        .closing h2 {
+            max-width: 860px;
+            margin-inline: auto;
+        }
+
+        .closing p {
+            margin: 22px auto 44px;
+            max-width: 680px;
+            color: var(--muted);
+            line-height: 1.9;
+            font-size: clamp(1.02rem, 2.2vw, 1.12rem);
+        }
+
+        .closing-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, 0.22);
+            background: rgba(253, 253, 253, 0.05);
+            color: var(--white);
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-outline-back:hover {
+            background: rgba(253, 253, 253, 0.12);
+            border-color: rgba(253, 253, 253, 0.45);
+            transform: translateY(-4px);
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid rgba(253, 253, 253, .1);
+            padding: clamp(28px, 6vw, 40px) 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(140, 49, 251, .12), transparent 70%);
+        }
+
+        .footer-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .footer-logo::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: inherit;
+            background: radial-gradient(circle, rgba(253, 253, 253, .32), transparent 70%),
+                radial-gradient(circle, rgba(140, 49, 251, .8), rgba(43, 105, 252, .6));
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .footer-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .footer-name {
+            font-family: var(--font-display);
+            font-weight: 600;
+        }
+
+        .footer-sub {
+            margin-top: 4px;
+            color: rgba(253, 253, 253, .5);
+            font-size: .9rem;
+        }
+
+        .footer-meta {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            color: rgba(253, 253, 253, .48);
+            font-size: .9rem;
+        }
+
+        .footer-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fff, rgba(253, 253, 253, .4));
+            box-shadow: 0 0 0 8px rgba(140, 49, 251, .1), 0 0 40px rgba(140, 49, 251, .3);
+        }
+
+        /* ANIMATIONS */
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        @keyframes grainShift {
+            0% { background-position: 0 0, 0 0; }
+            25% { background-position: 12px -18px, -8px 12px; }
+            50% { background-position: -14px 12px, 18px -8px; }
+            75% { background-position: 8px 18px, -12px -14px; }
+            100% { background-position: 0 0, 0 0; }
+        }
+
+        @media(max-width: 920px) {
+            .proof-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .proof-frame,
+            .proof-frame--two {
+                grid-column: 1 / -1;
+                margin-top: 0;
+                transform: none;
+            }
+
+            .proof-frame:hover {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media(max-width: 640px) {
+            section {
+                padding: 60px 18px;
+            }
+
+            .top-nav {
+                padding: 12px 16px;
+            }
+
+            .closing-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn, .btn-outline-back {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="film-grain"></div>
+    <div class="cursor-spotlight hidden" id="cursorSpotlight"></div>
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-nav">
+        <div class="top-nav-inner">
+            <a href="index.html?skipIntro=true#funnel" class="nav-brand" title="Back to Italian Mall Social Growth Funnel">
+                <div class="nav-logo">
+                    <img src="logo.jpg" alt="Italian Mall logo" />
+                </div>
+                <div>
+                    <div class="nav-title">Hypeif Media × Italian Mall</div>
+                    <div class="nav-subtitle">Social Growth Proposal</div>
+                </div>
+            </a>
+            <div class="nav-actions">
+                <div class="page-badge">
+                    <span class="page-badge-dot"></span>
+                    <span>Page 02 • Client Proof</span>
+                </div>
+                <a href="index.html?skipIntro=true#funnel" class="btn-back">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    <span>Back to Funnel</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="site">
+
+        <!-- RECENT CLIENTS / PROOF -->
+        <section id="recent-clients">
+            <div>
+                <div class="eyebrow">Proof In The Numbers</div>
+                <h2>Recent Clients</h2>
+                <p class="section-intro">
+                    This funnel already works — here's a recent restaurant client. These are their actual dashboard numbers from the last 60 days.
+                </p>
+            </div>
+
+            <div class="proof-section" style="margin-top: clamp(40px, 8vw, 70px);">
+                <div class="proof-header">
+                    <div>
+                        <h3 class="proof-title">Same funnel. New audience. Scalable to Italian Mall.</h3>
+                        <p class="proof-sub">Aug 25 – Oct 23 • 60 Days of Results</p>
+                    </div>
+                    <div class="proof-badge">
+                        <span>Aug 25 – Oct 23</span>
+                        <span class="proof-badge-dot"></span>
+                        <span>60 Days</span>
+                    </div>
+                </div>
+
+                <div class="proof-gallery">
+                    <div class="proof-frame proof-frame--one">
+                        <div class="proof-frame-glow"></div>
+                        <div class="proof-frame-inner">
+                            <img src="picture1.jpg" alt="Restaurant client TikTok & Instagram analytics dashboard" />
+                        </div>
+                        <div class="proof-frame-label">Platform Insights</div>
+                    </div>
+                    <div class="proof-frame proof-frame--two">
+                        <div class="proof-frame-glow"></div>
+                        <div class="proof-frame-inner">
+                            <img src="picture2.jpg" alt="Restaurant client reach and views analytics dashboard" />
+                        </div>
+                        <div class="proof-frame-label">Reach & Growth</div>
+                    </div>
+                </div>
+
+                <div class="proof-stats">
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">TikTok</span>
+                            <span class="proof-stat-up">+1,214.6%</span>
+                        </div>
+                        <strong class="proof-stat-value">339.5K</strong>
+                        <p class="proof-stat-text">Post Views • +313.7K in 60 days</p>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">Instagram</span>
+                            <span class="proof-stat-up">90.4% New</span>
+                        </div>
+                        <strong class="proof-stat-value">90,460</strong>
+                        <p class="proof-stat-text">Content Views • 90.4% from non-followers</p>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">TikTok</span>
+                            <span class="proof-stat-up">+331.1%</span>
+                        </div>
+                        <strong class="proof-stat-value">5.2K</strong>
+                        <p class="proof-stat-text">Likes • 246 Comments • 202 Shares</p>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">Instagram</span>
+                            <span class="proof-stat-up">Heavy Lifting</span>
+                        </div>
+                        <strong class="proof-stat-value">58.9K</strong>
+                        <p class="proof-stat-text">Reel Views • 35,447 Total Viewers</p>
+                    </div>
+                </div>
+
+                <div class="proof-footer">
+                    <div class="proof-footer-line"></div>
+                    <p class="proof-footer-text">Same funnel. New audience. Scalable to Italian Mall.</p>
+                    <div class="proof-footer-line"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOSING -->
+        <section class="closing">
+            <div class="closing-inner">
+                <div class="closing-orbs">
+                    <div class="closing-orb closing-orb--one"></div>
+                    <div class="closing-orb closing-orb--two"></div>
+                </div>
+                <div class="eyebrow">Next Step</div>
+                <h2>Let’s Make Italian Mall <span class="gradient-text">Impossible to Ignore.</span></h2>
+                <p>
+                    Hypeif Media will create the content, amplify what works, and partner with the right creators to grow
+                    Italian Mall consistently with a strategy built to convert attention into real foot traffic.
+                </p>
+                <div class="closing-buttons">
+                    <button class="btn" type="button" onclick="alert('Thank you! Hypeif Media will follow up with the full proposal.')">
+                        <span>Start With Hypeif Media</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </button>
+                    <a href="index.html?skipIntro=true#funnel" class="btn-outline-back">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 12H5M12 19l-7-7 7-7"/>
+                        </svg>
+                        <span>Review Funnel Strategy</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <img src="logo.jpg" alt="Hypeif Media × Italian Mall logo" />
+                    </div>
+                    <div>
+                        <p class="footer-name">Hypeif Media × Italian Mall</p>
+                        <p class="footer-sub">Social Media Growth Proposal</p>
+                    </div>
+                </div>
+                <div class="footer-meta">
+                    <span>Built to turn attention into foot traffic</span>
+                    <span class="footer-dot"></span>
+                    <span>© 2026 Hypeif Media. All rights reserved.</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        const spotlight = document.getElementById('cursorSpotlight');
+        if (spotlight) {
+            window.addEventListener('mousemove', (e) => {
+                spotlight.style.left = e.clientX + 'px';
+                spotlight.style.top = e.clientY + 'px';
+                spotlight.classList.remove('hidden');
+            });
+
+            document.addEventListener('mouseleave', () => {
+                spotlight.classList.add('hidden');
+            });
+        }
+
+        // Support keyboard navigation back to funnel
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && !e.target.matches('input, textarea')) {
+                window.location.href = 'index.html?skipIntro=true#funnel';
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -636,204 +636,920 @@
             line-height: 1.9;
         }
 
-        /* ---------- CINEMATIC FUNNEL ---------- */
-        .funnel-scene {
-            margin-top: clamp(60px, 10vw, 96px);
+        /* ---------- OUT-OF-THE-BOX 3D REAL FUNNEL ---------- */
+        .funnel-container {
             position: relative;
-            display: grid;
-            gap: clamp(38px, 9vw, 68px);
-            perspective: 2000px;
-            transform-style: preserve-3d;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .funnel-connectors {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            display: none;
+        /* Funnel Controls & Stage Navigator */
+        .funnel-controls {
+            margin-top: clamp(28px, 6vw, 44px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            padding: 12px 18px;
+            border-radius: 999px;
+            background: rgba(10, 10, 16, 0.7);
+            border: 1px solid rgba(253, 253, 253, 0.12);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
         }
 
-        @media(min-width: 920px) {
-            .funnel-connectors {
-                display: block;
-            }
+        .funnel-stage-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
-        .connector-line {
-            position: absolute;
-            left: calc(50% + 8px);
-            width: 1px;
-            background: radial-gradient(to bottom, rgba(140, 49, 251, .8), rgba(43, 105, 252, .4), transparent);
-            filter: blur(.2px);
-            opacity: 0;
-            transition: opacity 1.2s ease, height 1.6s ease;
+        .stage-nav-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(253, 253, 253, 0.12);
+            background: rgba(253, 253, 253, 0.04);
+            color: rgba(253, 253, 253, 0.75);
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: all 0.25s ease;
         }
 
-        .connector-line.active {
-            opacity: .7;
+        .stage-nav-pill:hover {
+            color: var(--white);
+            background: rgba(253, 253, 253, 0.1);
+            border-color: rgba(253, 253, 253, 0.28);
+            transform: translateY(-1px);
         }
 
-        .connector-line--one {
-            top: 190px;
-            height: 0;
+        .stage-nav-pill.active {
+            color: var(--white);
+            border-color: rgba(140, 49, 251, 0.65);
+            background: radial-gradient(circle at center, rgba(140, 49, 251, 0.32), rgba(43, 105, 252, 0.2));
+            box-shadow: 0 4px 20px rgba(140, 49, 251, 0.4);
         }
 
-        .connector-line--two {
-            top: calc(190px + 420px);
-            height: 0;
+        .stage-nav-pill--outcome.active {
+            border-color: rgba(34, 211, 238, 0.75);
+            background: radial-gradient(circle at center, rgba(34, 211, 238, 0.3), rgba(16, 185, 129, 0.22));
+            box-shadow: 0 4px 20px rgba(34, 211, 238, 0.4);
         }
 
-        .funnel-card {
+        .nav-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+        }
+
+        .nav-dot--purple {
+            background: var(--purple);
+            box-shadow: 0 0 8px var(--purple);
+        }
+
+        .nav-dot--blue {
+            background: var(--blue);
+            box-shadow: 0 0 8px var(--blue);
+        }
+
+        .nav-dot--cyan {
+            background: var(--cyan);
+            box-shadow: 0 0 8px var(--cyan);
+        }
+
+        .nav-dot--emerald {
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .funnel-toggle-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(140, 49, 251, 0.45);
+            background: linear-gradient(135deg, rgba(140, 49, 251, 0.22), rgba(43, 105, 252, 0.22));
+            color: var(--white);
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .funnel-toggle-all-btn:hover {
+            border-color: rgba(140, 49, 251, 0.85);
+            background: linear-gradient(135deg, rgba(140, 49, 251, 0.38), rgba(43, 105, 252, 0.38));
+            box-shadow: 0 0 24px rgba(140, 49, 251, 0.45);
+            transform: translateY(-1px);
+        }
+
+        .toggle-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(253, 253, 253, 0.18);
+            font-size: 0.85rem;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+
+        /* MASTER FUNNEL VESSEL WRAPPER */
+        .funnel-vessel-wrapper {
             position: relative;
-            display: grid;
-            grid-template-columns: auto 1fr;
-            gap: clamp(18px, 5vw, 36px);
-            align-items: start;
-            opacity: 0;
-            transform: rotateX(14deg) translateZ(-160px) translateY(80px);
-            filter: blur(10px);
-            transition: opacity 1.2s ease, transform 1.4s cubic-bezier(.2, .8, .2, 1), filter 1.2s ease;
-        }
-
-        .funnel-card.in-view {
-            opacity: 1;
-            transform: rotateX(0deg) translateZ(0) translateY(0);
-            filter: blur(0);
-        }
-
-        .funnel-card--static {
-            transform: translateY(60px);
-            filter: blur(8px);
-        }
-
-        .funnel-card--static.in-view {
-            transform: translateY(0);
-            filter: blur(0);
-        }
-
-        .card-rail {
+            margin-top: clamp(40px, 7vw, 64px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 18px;
-            position: relative;
+            width: 100%;
         }
 
-        .card-number {
-            width: 72px;
-            height: 72px;
+        /* Central Animated Energy Flow */
+        .funnel-energy-core {
+            position: absolute;
+            top: 20px;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .energy-stream {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(140, 49, 251, 0.8), rgba(43, 105, 252, 0.9), rgba(34, 211, 238, 1), #10b981);
+            filter: blur(1.5px);
+            opacity: 0.65;
+        }
+
+        .energy-particle {
+            position: absolute;
+            left: 50%;
+            width: 8px;
+            height: 26px;
+            border-radius: 999px;
+            background: #ffffff;
+            box-shadow: 0 0 16px #ffffff, 0 0 30px #22d3ee;
+            transform: translateX(-50%);
+            animation: energyDrop 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .energy-particle.p1 {
+            animation-delay: 0s;
+        }
+
+        .energy-particle.p2 {
+            animation-delay: 1.1s;
+        }
+
+        .energy-particle.p3 {
+            animation-delay: 2.2s;
+        }
+
+        .energy-particle.p4 {
+            animation-delay: 3.3s;
+        }
+
+        @keyframes energyDrop {
+            0% {
+                top: -20px;
+                opacity: 0;
+                transform: translateX(-50%) scaleY(0.5);
+            }
+
+            15% {
+                opacity: 1;
+                transform: translateX(-50%) scaleY(1.2);
+            }
+
+            85% {
+                opacity: 1;
+                transform: translateX(-50%) scaleY(1.2);
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+                transform: translateX(-50%) scaleY(0.4);
+            }
+        }
+
+        /* 0. THE HOPPER / MOUTH */
+        .funnel-hopper {
+            width: 100%;
+            max-width: 1040px;
+            position: relative;
+            z-index: 2;
+            margin-bottom: -1px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hopper-rim {
+            position: relative;
+            width: 100%;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hopper-rim-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at 50% 50%, rgba(140, 49, 251, 0.38) 0%, rgba(43, 105, 252, 0.18) 50%, transparent 75%);
+            filter: blur(14px);
+        }
+
+        .hopper-ellipse {
+            position: relative;
+            width: 100%;
+            height: 52px;
+            border-radius: 50%;
+            border: 2px solid rgba(140, 49, 251, 0.55);
+            background: radial-gradient(ellipse at center, rgba(140, 49, 251, 0.2) 0%, rgba(10, 10, 16, 0.92) 75%);
+            box-shadow: inset 0 0 24px rgba(140, 49, 251, 0.32), 0 0 32px rgba(140, 49, 251, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .hopper-label {
+            font-family: var(--font-display);
+            font-size: 0.74rem;
+            font-weight: 700;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            color: rgba(253, 253, 253, 0.88);
+            text-shadow: 0 0 12px rgba(140, 49, 251, 0.7);
+        }
+
+        .hopper-stream-arrow {
+            color: #22d3ee;
+            font-size: 1.05rem;
+            animation: arrowBounce 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes arrowBounce {
+            from {
+                transform: translateY(-2px);
+                opacity: 0.6;
+            }
+
+            to {
+                transform: translateY(3px);
+                opacity: 1;
+            }
+        }
+
+        .hopper-floating-tags {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .floating-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.05em;
+            padding: 5px 12px;
+            border-radius: 999px;
+            background: rgba(18, 12, 36, 0.85);
+            border: 1px solid rgba(140, 49, 251, 0.38);
+            color: rgba(253, 253, 253, 0.82);
+            backdrop-filter: blur(8px);
+            animation: floatTag 3.6s ease-in-out infinite alternate;
+        }
+
+        .floating-tag.ft-1 {
+            animation-delay: 0s;
+        }
+
+        .floating-tag.ft-2 {
+            animation-delay: 0.9s;
+        }
+
+        .floating-tag.ft-3 {
+            animation-delay: 1.8s;
+        }
+
+        .floating-tag.ft-4 {
+            animation-delay: 2.7s;
+        }
+
+        @keyframes floatTag {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* TIER WRAPPERS (AUTHENTIC TAPERED FUNNEL GEOMETRY) */
+        .funnel-tier-wrapper {
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s ease;
+            margin: 0 auto;
+        }
+
+        /* Physical Conical Taper Widths: 100% -> 84% -> 68% */
+        .funnel-tier-wrapper.tier-1 {
+            width: 100%;
+            max-width: 1040px;
+        }
+
+        .funnel-tier-wrapper.tier-2 {
+            width: 84%;
+            max-width: 860px;
+        }
+
+        .funnel-tier-wrapper.tier-3 {
+            width: 68%;
+            max-width: 680px;
+        }
+
+        /* Conical Shell */
+        .funnel-tier-conical {
+            position: relative;
+            width: 100%;
+        }
+
+        .funnel-tier-header {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: var(--white);
+            cursor: pointer;
+            text-align: left;
+            padding: 0;
+            font-family: inherit;
+            display: block;
+        }
+
+        /* 3D Conical Trapezoid Surface */
+        .tier-conical-surface {
+            position: relative;
+            padding: clamp(24px, 4vw, 36px) clamp(28px, 5vw, 48px);
+            border-radius: 26px;
+            border: 1px solid rgba(253, 253, 253, 0.16);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(253, 253, 253, 0.2);
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+            overflow: hidden;
+        }
+
+        /* Distinct Physical Taper Clip-Paths for desktop: Top is wider, bottom narrows inward */
+        .tier-1 .tier-conical-surface {
+            background: radial-gradient(circle at 50% 0%, rgba(140, 49, 251, 0.26) 0%, transparent 65%),
+                linear-gradient(180deg, rgba(22, 14, 42, 0.9) 0%, rgba(12, 10, 24, 0.95) 100%);
+            border-color: rgba(140, 49, 251, 0.42);
+            clip-path: polygon(0% 0%, 100% 0%, 94% 100%, 6% 100%);
+        }
+
+        .tier-2 .tier-conical-surface {
+            background: radial-gradient(circle at 50% 0%, rgba(43, 105, 252, 0.26) 0%, transparent 65%),
+                linear-gradient(180deg, rgba(14, 20, 44, 0.9) 0%, rgba(8, 12, 26, 0.95) 100%);
+            border-color: rgba(43, 105, 252, 0.42);
+            clip-path: polygon(0% 0%, 100% 0%, 92% 100%, 8% 100%);
+        }
+
+        .tier-3 .tier-conical-surface {
+            background: radial-gradient(circle at 50% 0%, rgba(34, 211, 238, 0.24) 0%, transparent 65%),
+                linear-gradient(180deg, rgba(10, 24, 38, 0.9) 0%, rgba(6, 14, 22, 0.95) 100%);
+            border-color: rgba(34, 211, 238, 0.42);
+            clip-path: polygon(0% 0%, 100% 0%, 88% 100%, 12% 100%);
+        }
+
+        /* 3D Rim Highlights & Sheen */
+        .tier-conical-surface::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(253, 253, 253, 0.08) 50%, transparent 100%);
+            pointer-events: none;
+            opacity: 0.7;
+        }
+
+        .tier-rim-top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(253, 253, 253, 0.5), transparent);
+        }
+
+        .funnel-tier-header:hover .tier-conical-surface {
+            transform: translateY(-4px);
+        }
+
+        .tier-1 .funnel-tier-header:hover .tier-conical-surface {
+            border-color: rgba(140, 49, 251, 0.75);
+            box-shadow: 0 28px 70px rgba(140, 49, 251, 0.38);
+        }
+
+        .tier-2 .funnel-tier-header:hover .tier-conical-surface {
+            border-color: rgba(43, 105, 252, 0.75);
+            box-shadow: 0 28px 70px rgba(43, 105, 252, 0.38);
+        }
+
+        .tier-3 .funnel-tier-header:hover .tier-conical-surface {
+            border-color: rgba(34, 211, 238, 0.75);
+            box-shadow: 0 28px 70px rgba(34, 211, 238, 0.38);
+        }
+
+        .funnel-tier-header:focus-visible .tier-conical-surface {
+            outline: 2px solid rgba(253, 253, 253, 0.7);
+            outline-offset: 4px;
+        }
+
+        /* Tier Meta Bar */
+        .tier-meta-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .tier-stage-badge {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            letter-spacing: 0.28em;
+            font-size: 0.72rem;
+            color: rgba(253, 253, 253, 0.62);
+            font-weight: 600;
+        }
+
+        .tier-intent-pill {
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.7rem;
+            letter-spacing: 0.04em;
+            background: rgba(253, 253, 253, 0.06);
+            border: 1px solid rgba(253, 253, 253, 0.14);
+            color: rgba(253, 253, 253, 0.8);
+        }
+
+        /* Tier Main Content Row */
+        .tier-main-row {
+            display: flex;
+            align-items: center;
+            gap: clamp(16px, 3vw, 24px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .tier-number-orb {
+            width: 58px;
+            height: 58px;
             border-radius: 50%;
             display: grid;
             place-items: center;
             font-family: var(--font-display);
-            font-weight: 700;
-            letter-spacing: .18em;
-            font-size: .9rem;
+            font-weight: 800;
+            font-size: 1.05rem;
+            letter-spacing: 0.04em;
+            flex-shrink: 0;
             position: relative;
+        }
+
+        .tier-orb--purple {
+            background: radial-gradient(circle at 35% 35%, rgba(253, 253, 253, 0.25), transparent 70%),
+                linear-gradient(135deg, var(--purple), #4a1599);
+            box-shadow: 0 0 24px rgba(140, 49, 251, 0.6), inset 0 1px 1px rgba(253, 253, 253, 0.5);
+            border: 1px solid rgba(253, 253, 253, 0.3);
+        }
+
+        .tier-orb--blue {
+            background: radial-gradient(circle at 35% 35%, rgba(253, 253, 253, 0.25), transparent 70%),
+                linear-gradient(135deg, var(--blue), #103496);
+            box-shadow: 0 0 24px rgba(43, 105, 252, 0.6), inset 0 1px 1px rgba(253, 253, 253, 0.5);
+            border: 1px solid rgba(253, 253, 253, 0.3);
+        }
+
+        .tier-orb--cyan {
+            background: radial-gradient(circle at 35% 35%, rgba(253, 253, 253, 0.25), transparent 70%),
+                linear-gradient(135deg, var(--cyan), #0d6b79);
+            box-shadow: 0 0 24px rgba(34, 211, 238, 0.6), inset 0 1px 1px rgba(253, 253, 253, 0.5);
+            border: 1px solid rgba(253, 253, 253, 0.3);
+            color: #010101;
+        }
+
+        .tier-info {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .tier-action-tag {
+            font-family: var(--font-display);
             text-transform: uppercase;
+            letter-spacing: 0.24em;
+            font-size: 0.72rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 4px;
         }
 
-        .card-number::before,
-        .card-number::after {
-            content: "";
-            position: absolute;
-            inset: 0;
+        .tier-1 .tier-action-tag {
+            color: #c084fc;
+        }
+
+        .tier-2 .tier-action-tag {
+            color: #60a5fa;
+        }
+
+        .tier-3 .tier-action-tag {
+            color: #67e8f9;
+        }
+
+        .tier-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.4rem, 3.2vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -0.035em;
+            margin: 0;
+            line-height: 1.18;
+        }
+
+        .tier-desc {
+            margin-top: 6px;
+            color: var(--muted);
+            line-height: 1.65;
+            font-size: clamp(0.9rem, 1.6vw, 1rem);
+            max-width: 640px;
+        }
+
+        .tier-cta-wrap {
+            flex-shrink: 0;
+        }
+
+        .tier-toggle-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            background: rgba(253, 253, 253, 0.08);
+            border: 1px solid rgba(253, 253, 253, 0.16);
+            font-family: var(--font-display);
+            font-size: 0.74rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(253, 253, 253, 0.85);
+            transition: all 0.25s ease;
+        }
+
+        .funnel-tier-header:hover .tier-toggle-indicator {
+            background: rgba(253, 253, 253, 0.16);
+            border-color: rgba(253, 253, 253, 0.35);
+        }
+
+        .toggle-sign {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
+            background: rgba(253, 253, 253, 0.12);
+            font-size: 0.95rem;
+            line-height: 1;
+            transition: transform 0.3s ease;
         }
 
-        .card-number::before {
-            padding: 1px;
-            background: radial-gradient(circle, rgba(253, 253, 253, .36), transparent 70%),
-                radial-gradient(circle, rgba(140, 49, 251, .8), rgba(43, 105, 252, .6));
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
+        .funnel-tier-wrapper.expanded .toggle-sign {
+            transform: rotate(45deg);
         }
 
-        .card-number::after {
-            inset: 4px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(140, 49, 251, .26), transparent 70%),
-                radial-gradient(circle at 50% 0%, rgba(253, 253, 253, .12), transparent 70%);
-            box-shadow: 0 30px 70px rgba(140, 49, 251, .26);
+        .tier-metrics-strip {
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(253, 253, 253, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 0.74rem;
+            letter-spacing: 0.04em;
+            color: rgba(253, 253, 253, 0.52);
         }
 
-        .card-number span {
+        .strip-sep {
+            color: rgba(253, 253, 253, 0.25);
+        }
+
+        /* INTER-TIER COUPLING CONNECTORS */
+        .funnel-connector {
             position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 38px;
             z-index: 1;
         }
 
-        .card-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #fff, rgba(253, 253, 253, .4));
-            box-shadow: 0 0 0 10px rgba(140, 49, 251, .12), 0 0 60px rgba(140, 49, 251, .4);
+        .connector-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(140, 49, 251, 0.7), rgba(43, 105, 252, 0.7));
         }
 
-        .funnel-card-body {
+        .connector-2-3 .connector-line {
+            background: linear-gradient(180deg, rgba(43, 105, 252, 0.7), rgba(34, 211, 238, 0.7));
+        }
+
+        .connector-ring {
             position: relative;
-            border-radius: calc(var(--radius) + 6px);
-            border: 1px solid transparent;
+            z-index: 2;
+            padding: 3px 14px;
+            border-radius: 999px;
+            background: rgba(10, 10, 16, 0.95);
+            border: 1px solid rgba(253, 253, 253, 0.16);
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(253, 253, 253, 0.52);
+        }
+
+        /* DETAILS DRAWER */
+        .funnel-details {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            max-height: 0;
+            opacity: 0;
             overflow: hidden;
+            transition: max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, padding 0.4s ease;
+            padding: 0 16px;
+        }
+
+        .funnel-tier-wrapper.expanded .funnel-details {
+            max-height: 900px;
+            opacity: 1;
+            padding-top: 20px;
+            padding-bottom: 24px;
+        }
+
+        /* Execution Pillar Cards */
+        .funnel-point {
+            position: relative;
+            border-radius: 20px;
+            padding: 22px;
+            display: grid;
+            gap: 10px;
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
-            transform-style: preserve-3d;
-            transition: transform .4s ease, box-shadow .4s ease;
+            border: 1px solid rgba(253, 253, 253, 0.1);
+            background: rgba(14, 14, 22, 0.75);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .funnel-card-body::before,
-        .funnel-card-body::after {
-            content: "";
+        .funnel-point:hover {
+            transform: translateY(-4px);
+        }
+
+        .point--purple {
+            border-color: rgba(140, 49, 251, 0.28);
+        }
+
+        .point--purple:hover {
+            border-color: rgba(140, 49, 251, 0.65);
+            box-shadow: 0 14px 40px rgba(140, 49, 251, 0.22);
+        }
+
+        .point--blue {
+            border-color: rgba(43, 105, 252, 0.28);
+        }
+
+        .point--blue:hover {
+            border-color: rgba(43, 105, 252, 0.65);
+            box-shadow: 0 14px 40px rgba(43, 105, 252, 0.22);
+        }
+
+        .point--cyan {
+            border-color: rgba(34, 211, 238, 0.28);
+        }
+
+        .point--cyan:hover {
+            border-color: rgba(34, 211, 238, 0.65);
+            box-shadow: 0 14px 40px rgba(34, 211, 238, 0.22);
+        }
+
+        .point-badge-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .point-pillar-id {
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            color: rgba(253, 253, 253, 0.4);
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        .point-highlight {
+            font-size: 0.72rem;
+            letter-spacing: 0.04em;
+            color: rgba(253, 253, 253, 0.48);
+            padding-top: 8px;
+            border-top: 1px dashed rgba(253, 253, 253, 0.1);
+        }
+
+        /* 4. THE SPOUT & NOZZLE (Physical Cylindrical Funnel Neck) */
+        .funnel-spout {
+            position: relative;
+            z-index: 2;
+            width: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 2px;
+        }
+
+        .spout-pipe {
+            position: relative;
+            width: 140px;
+            height: 90px;
+            border-left: 2px solid rgba(34, 211, 238, 0.6);
+            border-right: 2px solid rgba(34, 211, 238, 0.6);
+            background: linear-gradient(180deg, rgba(10, 24, 38, 0.85) 0%, rgba(6, 18, 28, 0.95) 100%);
+            box-shadow: 0 0 30px rgba(34, 211, 238, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .spout-laser-core {
+            position: absolute;
+            width: 18px;
+            top: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, #22d3ee, #ffffff, #10b981);
+            filter: blur(2px);
+            box-shadow: 0 0 20px #22d3ee;
+            animation: laserPulsate 1.8s ease-in-out infinite alternate;
+        }
+
+        @keyframes laserPulsate {
+            from {
+                opacity: 0.6;
+                filter: blur(3px);
+                width: 14px;
+            }
+
+            to {
+                opacity: 1;
+                filter: blur(1.5px);
+                width: 22px;
+            }
+        }
+
+        .spout-rings {
             position: absolute;
             inset: 0;
-            border-radius: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
             pointer-events: none;
         }
 
-        .funnel-card-body::before {
-            padding: 1px;
-            background: radial-gradient(circle at top, rgba(253, 253, 253, .32), transparent 72%),
-                radial-gradient(circle at bottom, rgba(140, 49, 251, .42), transparent 82%);
-            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
+        .spout-ring {
+            width: 100%;
+            height: 1px;
+            background: rgba(34, 211, 238, 0.4);
         }
 
-        .funnel-card-body::after {
-            background: radial-gradient(circle at 20% 0%, rgba(140, 49, 251, .18), transparent 60%),
-                radial-gradient(circle at 80% 0%, rgba(43, 105, 252, .14), transparent 62%),
-                linear-gradient(180deg, rgba(253, 253, 253, .06) 0%, rgba(253, 253, 253, .02) 100%);
+        .spout-tag {
+            margin-top: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: rgba(10, 26, 36, 0.9);
+            border: 1px solid rgba(34, 211, 238, 0.45);
+            font-family: var(--font-display);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #22d3ee;
+            white-space: nowrap;
         }
 
-        .funnel-card-body:hover {
-            transform: translateY(-10px) rotateX(1deg);
-            box-shadow: 0 54px 120px rgba(18, 8, 42, .84);
+        .spout-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22d3ee;
+            box-shadow: 0 0 8px #22d3ee;
+            animation: dotBlink 1.2s infinite;
         }
 
-        .funnel-card--static .funnel-card-body:hover {
-            transform: translateY(-6px);
+        @keyframes dotBlink {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.3;
+                transform: scale(0.7);
+            }
         }
 
-        .card-light-sweep {
-            position: absolute;
-            inset: -40% -70%;
-            background: linear-gradient(120deg, transparent 30%, rgba(34, 211, 238, .14) 48%, rgba(140, 49, 251, .16) 56%, transparent 76%);
-            transform: translateX(-80%) rotate(24deg);
-            pointer-events: none;
-            mix-blend-mode: screen;
+        .spout-arrow {
+            font-size: 0.8rem;
+            animation: arrowBounce 1.5s ease-in-out infinite alternate;
         }
 
-        .funnel-card.in-view .card-light-sweep {
-            animation: cardSweep 1.8s ease 0.6s forwards;
-        }
-
-        .card-inner {
+        /* 5. FUNNEL ADVANCE CTA TO NEXT PAGE (RECENT CLIENTS) */
+        .funnel-advance-container {
             position: relative;
-            z-index: 1;
-            display: grid;
-            gap: clamp(24px, 6vw, 38px);
-            padding: clamp(26px, 6vw, 46px);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: clamp(36px, 6vw, 56px);
+            text-align: center;
+        }
+
+        .funnel-advance-beam {
+            width: 2px;
+            height: 36px;
+            margin-bottom: 18px;
+            background: linear-gradient(180deg, rgba(34, 211, 238, 0.85), rgba(140, 49, 251, 0.5), transparent);
+            box-shadow: 0 0 14px rgba(34, 211, 238, 0.7);
+            animation: pulseGlow 2.5s ease-in-out infinite;
+        }
+
+        .funnel-advance-btn {
+            font-size: clamp(0.96rem, 1.8vw, 1.08rem);
+            padding: 18px 42px;
+            gap: 14px;
+            letter-spacing: 0.02em;
+            background: radial-gradient(circle at 30% 30%, rgba(253, 253, 253, 0.25), transparent 58%),
+                linear-gradient(135deg, #8c31fb 0%, #2b69fc 50%, #22d3ee 100%);
+            box-shadow: 0 16px 48px rgba(140, 49, 251, 0.45), 0 0 30px rgba(34, 211, 238, 0.25);
+            border: 1px solid rgba(253, 253, 253, 0.25);
+            cursor: pointer;
+        }
+
+        .funnel-advance-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 24px 64px rgba(140, 49, 251, 0.6), 0 0 45px rgba(34, 211, 238, 0.45);
+            border-color: rgba(253, 253, 253, 0.45);
+        }
+
+        .funnel-advance-note {
+            margin-top: 14px;
+            font-size: 0.78rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(253, 253, 253, 0.52);
+            font-family: var(--font-display);
+        }
+
+        #recent-clients {
+            scroll-margin-top: 40px;
         }
 
         .card-header {
@@ -1620,18 +2336,40 @@
         }
 
         @media(max-width: 920px) {
-            .funnel-card {
-                grid-template-columns: 1fr;
-                gap: 18px;
+            .funnel-tier-wrapper.tier-1 {
+                width: 100%;
             }
 
-            .card-rail {
-                flex-direction: row;
-                justify-content: flex-start;
+            .funnel-tier-wrapper.tier-2 {
+                width: 92%;
             }
 
-            .card-dot {
-                display: none;
+            .funnel-tier-wrapper.tier-3 {
+                width: 84%;
+            }
+
+            .tier-1 .tier-conical-surface,
+            .tier-2 .tier-conical-surface,
+            .tier-3 .tier-conical-surface {
+                clip-path: none;
+            }
+
+            .outcome-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .funnel-controls {
+                border-radius: 24px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .funnel-stage-nav {
+                justify-content: center;
+            }
+
+            .funnel-toggle-all-btn {
+                justify-content: center;
             }
         }
 
@@ -1764,212 +2502,326 @@
     <main id="site">
 
         <!-- FUNNEL -->
-        <section id="funnel">
+        <section id="funnel" class="funnel-container">
             <div class="reveal">
                 <div class="eyebrow">Hypeif Media × Italian Mall</div>
                 <h2>The Social Growth Funnel</h2>
                 <p class="section-intro">
-                    A focused, cinematic system designed to grow Italian Mall’s audience, strengthen its brand presence, and convert
-                    attention into loyal customers. Built with precision to impress from the very first glance.
+                    A real, end-to-end conversion engine engineered to capture high-volume social attention across the
+                    city,
+                    filter and amplify what works, and convert high-trust audiences into real shoppers walking into
+                    Italian Mall.
                 </p>
             </div>
 
-            <div class="funnel-scene">
-                <div class="funnel-connectors">
-                    <div class="connector-line connector-line--one"></div>
-                    <div class="connector-line connector-line--two"></div>
+            <!-- Quick Navigation & Control Strip -->
+            <div class="funnel-controls reveal">
+                <div class="funnel-stage-nav" role="tablist" aria-label="Funnel Stages">
+                    <button class="stage-nav-pill active" type="button" onclick="focusFunnelStage(1)">
+                        <span class="nav-dot nav-dot--purple"></span>
+                        <span>01. Attract (TOFU)</span>
+                    </button>
+                    <button class="stage-nav-pill" type="button" onclick="focusFunnelStage(2)">
+                        <span class="nav-dot nav-dot--blue"></span>
+                        <span>02. Amplify (MOFU)</span>
+                    </button>
+                    <button class="stage-nav-pill" type="button" onclick="focusFunnelStage(3)">
+                        <span class="nav-dot nav-dot--cyan"></span>
+                        <span>03. Convert (BOFU)</span>
+                    </button>
+                </div>
+                <button class="funnel-toggle-all-btn" id="toggleAllBtn" type="button" onclick="toggleAllStages()">
+                    <span class="toggle-icon">+</span>
+                    <span class="toggle-text">Expand All Stages</span>
+                </button>
+            </div>
+
+            <!-- MASTER FUNNEL VESSEL -->
+            <div class="funnel-vessel-wrapper reveal">
+
+                <!-- Central Animated Energy Flow Line -->
+                <div class="funnel-energy-core" aria-hidden="true">
+                    <div class="energy-stream"></div>
+                    <div class="energy-particle p1"></div>
+                    <div class="energy-particle p2"></div>
+                    <div class="energy-particle p3"></div>
+                    <div class="energy-particle p4"></div>
                 </div>
 
-                <!-- 1. QUALITY CONTENT -->
-                <article class="funnel-card" data-step="1">
-                    <div class="card-rail">
-                        <div class="card-number"><span>01</span></div>
-                        <div class="card-dot"></div>
+                <!-- STAGE 1: WIDE CONE (TOP OF FUNNEL - ATTRACT) -->
+                <div class="funnel-tier-wrapper tier-1 funnel-step" id="funnelTier1" data-step="1">
+                    <div class="funnel-tier-conical">
+                        <button class="funnel-tier-header funnel-step-button" type="button" aria-expanded="false"
+                            onclick="toggleStage(1)">
+                            <div class="tier-conical-surface">
+                                <div class="tier-rim-top"></div>
+                                <div class="tier-meta-bar">
+                                    <span class="tier-stage-badge">Stage 01 • Top of Funnel (TOFU)</span>
+                                </div>
+                                <div class="tier-main-row">
+                                    <div class="tier-number-orb tier-orb--purple">
+                                        <span>01</span>
+                                    </div>
+                                    <div class="tier-info">
+                                        <span class="tier-action-tag">Attract</span>
+                                        <h3 class="tier-title">We Increase Quality</h3>
+                                        <p class="tier-desc">Content that makes people stop, watch, and remember Italian
+                                            Mall the moment it crosses their feed.</p>
+                                    </div>
+                                    <div class="tier-cta-wrap">
+                                        <span class="tier-toggle-indicator">
+                                            <span class="toggle-action-word">Explore Actions</span>
+                                            <span class="toggle-sign">+</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
                     </div>
-                    <div class="funnel-card-body">
-                        <div class="card-light-sweep"></div>
-                        <div class="card-inner">
-                            <header class="card-header">
-                                <div>
-                                    <div class="card-kicker">Attract</div>
-                                    <h3 class="card-title">We Increase Quality</h3>
-                                    <p class="card-sub">Content that makes people stop, watch, and remember Italian Mall the moment it crosses their feed.</p>
+                    <!-- Expandable Execution Pillars -->
+                    <div class="funnel-details" id="tierDetails1">
+                        <div class="funnel-point point--purple">
+                            <div class="point-badge-row">
+                                <span class="funnel-point-tag">Engagement</span>
+                                <span class="point-pillar-id">Pillar 1.1</span>
+                            </div>
+                            <h4 class="funnel-point-title">Funny & Relatable Content</h4>
+                            <p class="funnel-point-text">Short, humorous videos built around mall life, shopping
+                                moments, trends, and local culture designed for maximum shareability.</p>
+                        </div>
+                        <div class="funnel-point point--purple">
+                            <div class="point-badge-row">
+                                <span class="funnel-point-tag">Trust</span>
+                                <span class="point-pillar-id">Pillar 1.2</span>
+                            </div>
+                            <h4 class="funnel-point-title">Owner-Led Content</h4>
+                            <p class="funnel-point-text">The owner becomes the face of Italian Mall—sharing stories,
+                                offers, and behind-the-scenes moments that build genuine authenticity.</p>
+                        </div>
+                        <div class="funnel-point point--purple">
+                            <div class="point-badge-row">
+                                <span class="funnel-point-tag">Discovery</span>
+                                <span class="point-pillar-id">Pillar 1.3</span>
+                            </div>
+                            <h4 class="funnel-point-title">Store Spotlight Reels</h4>
+                            <p class="funnel-point-text">Fast, cinematic reels featuring stores, products, food,
+                                fashion, and experiences inside the mall to drive curiosity.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INTER-TIER COUPLING CONNECTOR 1 -> 2 -->
+                <div class="funnel-connector connector-1-2" aria-hidden="true">
+                    <div class="connector-line"></div>
+                    <div class="connector-ring">
+                        <span>Filter & Amplify Traffic</span>
+                    </div>
+                </div>
+
+                <!-- STAGE 2: MID CONE (MIDDLE OF FUNNEL - AMPLIFY) -->
+                <div class="funnel-tier-wrapper tier-2 funnel-step" id="funnelTier2" data-step="2">
+                    <div class="funnel-tier-conical">
+                        <button class="funnel-tier-header funnel-step-button" type="button" aria-expanded="false"
+                            onclick="toggleStage(2)">
+                            <div class="tier-conical-surface">
+                                <div class="tier-rim-top"></div>
+                                <div class="tier-meta-bar">
+                                    <span class="tier-stage-badge">Stage 02 • Middle of Funnel (MOFU)</span>
                                 </div>
-                                <div class="card-badge">Stop The Scroll</div>
-                            </header>
-                            <div class="card-grid">
-                                <div class="info-card">
-                                    <span class="info-tag">Engagement</span>
-                                    <h4 class="info-title">Funny & Relatable Content</h4>
-                                    <p class="info-text">Short, humorous videos built around mall life, shopping moments, trends, and local culture designed for maximum shareability.</p>
+                                <div class="tier-main-row">
+                                    <div class="tier-number-orb tier-orb--blue">
+                                        <span>02</span>
+                                    </div>
+                                    <div class="tier-info">
+                                        <span class="tier-action-tag">Amplify</span>
+                                        <h3 class="tier-title">Digital Marketing</h3>
+                                        <p class="tier-desc">We put budget behind content that already proves it
+                                            performs. Precision over guesswork, results over reach alone.</p>
+                                    </div>
+                                    <div class="tier-cta-wrap">
+                                        <span class="tier-toggle-indicator">
+                                            <span class="toggle-action-word">Explore Actions</span>
+                                            <span class="toggle-sign">+</span>
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="info-card">
-                                    <span class="info-tag">Trust</span>
-                                    <h4 class="info-title">Owner-Led Content</h4>
-                                    <p class="info-text">The owner becomes the face of Italian Mall—sharing stories, offers, and behind-the-scenes moments that build genuine authenticity.</p>
+                            </div>
+                        </button>
+                    </div>
+                    <!-- Expandable Execution Pillars -->
+                    <div class="funnel-details" id="tierDetails2">
+                        <div class="funnel-point point--blue">
+                            <div class="point-badge-row">
+                                <span class="funnel-point-tag">Smart Testing</span>
+                                <span class="point-pillar-id">Pillar 2.1</span>
+                            </div>
+                            <h4 class="funnel-point-title">Test Before Spending</h4>
+                            <p class="funnel-point-text">We publish organic content first and identify the videos with
+                                the strongest watch time, saves, shares, and engagement.</p>
+                        </div>
+                        <div class="funnel-point point--blue">
+                            <div class="point-badge-row">
+                                <span class="funnel-point-tag">Paid Boost</span>
+                                <span class="point-pillar-id">Pillar 2.2</span>
+                            </div>
+                            <h4 class="funnel-point-title">Boost Winning Videos</h4>
+                            <p class="funnel-point-text">Only high-performing content receives ad spend, reducing wasted
+                                budget while scaling what is already resonating.</p>
+                        </div>
+                        <div class="funnel-point point--blue">
+                            <div class="point-badge-row">
+                                <span class="funnel-point-tag">Retargeting</span>
+                                <span class="point-pillar-id">Pillar 2.3</span>
+                            </div>
+                            <h4 class="funnel-point-title">Reach Interested People</h4>
+                            <p class="funnel-point-text">Ads reconnect with viewers who engaged with Italian Mall,
+                                guiding them towards visits, offers, and purchases.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INTER-TIER COUPLING CONNECTOR 2 -> 3 -->
+                <div class="funnel-connector connector-2-3" aria-hidden="true">
+                    <div class="connector-line"></div>
+                    <div class="connector-ring">
+                        <span>Trust Transfer & Local Credibility</span>
+                    </div>
+                </div>
+
+                <!-- STAGE 3: STEEP NARROW CONE (BOTTOM OF FUNNEL - CONVERT) -->
+                <div class="funnel-tier-wrapper tier-3 funnel-step" id="funnelTier3" data-step="3">
+                    <div class="funnel-tier-conical">
+                        <div class="tier-conical-surface">
+                            <div class="tier-rim-top"></div>
+                            <div class="tier-meta-bar">
+                                <span class="tier-stage-badge">Stage 03 • Bottom of Funnel (BOFU)</span>
+                            </div>
+                            <div class="tier-main-row">
+                                <div class="tier-number-orb tier-orb--cyan">
+                                    <span>03</span>
                                 </div>
-                                <div class="info-card">
-                                    <span class="info-tag">Discovery</span>
-                                    <h4 class="info-title">Store Spotlight Reels</h4>
-                                    <p class="info-text">Fast, cinematic reels featuring stores, products, food, fashion, and experiences inside the mall to drive curiosity.</p>
+                                <div class="tier-info">
+                                    <span class="tier-action-tag">Convert</span>
+                                    <h3 class="tier-title">Influencer Marketing</h3>
+                                    <p class="tier-desc">Local creators introduce Italian Mall to new, highly relevant
+                                        audiences with credibility that ads simply can't buy.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </article>
+                </div>
 
-                <!-- 2. DIGITAL MARKETING -->
-                <article class="funnel-card" data-step="2">
-                    <div class="card-rail">
-                        <div class="card-number"><span>02</span></div>
-                        <div class="card-dot"></div>
-                    </div>
-                    <div class="funnel-card-body">
-                        <div class="card-light-sweep"></div>
-                        <div class="card-inner">
-                            <header class="card-header">
-                                <div>
-                                    <div class="card-kicker">Amplify</div>
-                                    <h3 class="card-title">Digital Marketing</h3>
-                                    <p class="card-sub">We put budget behind content that already proves it performs. Precision over guesswork, results over reach alone.</p>
-                                </div>
-                                <div class="card-badge">Data Driven</div>
-                            </header>
-                            <div class="card-grid">
-                                <div class="info-card">
-                                    <span class="info-tag">Smart Testing</span>
-                                    <h4 class="info-title">Test Before Spending</h4>
-                                    <p class="info-text">We publish organic content first and identify the videos with the strongest watch time, saves, shares, and engagement.</p>
-                                </div>
-                                <div class="info-card">
-                                    <span class="info-tag">Paid Boost</span>
-                                    <h4 class="info-title">Boost Winning Videos</h4>
-                                    <p class="info-text">Only high-performing content receives ad spend, reducing wasted budget while scaling what is already resonating.</p>
-                                </div>
-                                <div class="info-card">
-                                    <span class="info-tag">Retargeting</span>
-                                    <h4 class="info-title">Reach Interested People</h4>
-                                    <p class="info-text">Ads reconnect with viewers who engaged with Italian Mall, guiding them towards visits, offers, and purchases.</p>
-                                </div>
-                            </div>
+                <!-- 4. THE SPOUT & NOZZLE (Concentrated Output Tube) -->
+                <div class="funnel-spout" id="funnelSpout" aria-label="Funnel Spout">
+                    <div class="spout-pipe">
+                        <div class="spout-laser-core"></div>
+                        <div class="spout-laser-pulse"></div>
+                        <div class="spout-rings">
+                            <span class="spout-ring"></span>
+                            <span class="spout-ring"></span>
+                            <span class="spout-ring"></span>
                         </div>
                     </div>
-                </article>
+                </div>
 
-                <!-- 3. INFLUENCERS -->
-                <article class="funnel-card funnel-card--static" data-step="3">
-                    <div class="card-rail">
-                        <div class="card-number"><span>03</span></div>
+                <!-- 5. ADVANCE TO NEXT PAGE: RECENT CLIENTS -->
+                <div class="funnel-advance-container" id="funnelAdvanceWrap">
+                    <div class="funnel-advance-beam" aria-hidden="true"></div>
+                    <button class="btn funnel-advance-btn" type="button" onclick="goToRecentClients()"
+                        aria-label="Move to Recent Clients section">
+                        <span>See Recent Client Results</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M5 12h14M13 6l6 6-6 6" />
+                        </svg>
+                    </button>
+                    <span class="funnel-advance-note">Next: 60 Days of Live Analytics &amp; Proven Results</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- RECENT CLIENTS / PROOF -->
+        <section id="recent-clients">
+            <div class="reveal">
+                <div class="eyebrow">Proof In The Numbers</div>
+                <h2>Recent Clients</h2>
+                <p class="section-intro">
+                    This funnel already works — here's a recent restaurant client. These are their actual dashboard
+                    numbers from the last 60 days.
+                </p>
+            </div>
+
+            <div class="proof-section" style="margin-top: clamp(40px, 8vw, 70px);">
+                <div class="proof-header">
+                    <div>
+                        <h3 class="proof-title">Same funnel. New audience. Scalable to Italian Mall.</h3>
+                        <p class="proof-sub">Aug 25 – Oct 23 • 60 Days of Results</p>
                     </div>
-                    <div class="funnel-card-body">
-                        <div class="holo-overlay">
-                            <div class="holo-grid"></div>
-                            <div class="holo-scan"></div>
-                        </div>
-                        <div class="card-inner">
-                            <header class="card-header">
-                                <div>
-                                    <div class="card-kicker">Expand</div>
-                                    <h3 class="card-title">Influencer Marketing</h3>
-                                    <p class="card-sub">Local creators introduce Italian Mall to new, highly relevant audiences with credibility that ads simply can't buy.</p>
-                                </div>
-                                <div class="card-badge">Holographic Reach</div>
-                            </header>
-                            <div class="card-grid">
-                                <div class="info-card">
-                                    <span class="info-tag">Reach</span>
-                                    <h4 class="info-title">Local Creator Collabs</h4>
-                                    <p class="info-text">We partner with creators whose followers match Italian Mall’s ideal customers for maximum relevance.</p>
-                                </div>
-                                <div class="info-card">
-                                    <span class="info-tag">Credibility</span>
-                                    <h4 class="info-title">Authentic Recommendations</h4>
-                                    <p class="info-text">Creators showcase real visits, products, and experiences—making the mall feel familiar, desirable and trustworthy.</p>
-                                </div>
-                                <div class="info-card" style="transform: none !important; box-shadow: none;">
-                                    <span class="info-tag">Flexible Budget</span>
-                                    <h4 class="info-title">Budget-Based Strategy</h4>
-                                    <p class="info-text">We recommend influencer tiers based on Italian Mall’s comfort level, from micro-creators all the way up to larger local personalities.</p>
-                                </div>
-                            </div>
-
-                            <div class="proof-section">
-                                <div class="proof-header">
-                                    <div>
-                                        <div class="card-kicker" style="margin-bottom: 10px;">Proof In The Numbers</div>
-                                        <h4 class="proof-title">This funnel already works — here's a recent restaurant client</h4>
-                                        <p class="proof-sub">Before we talk theory for Italian Mall, look at what the same approach did for a restaurant client in the last 60 days. These are their actual dashboard numbers.</p>
-                                    </div>
-                                    <div class="proof-badge">
-                                        <span>Aug 25 – Oct 23</span>
-                                        <span class="proof-badge-dot"></span>
-                                        <span>60 Days</span>
-                                    </div>
-                                </div>
-
-                                <div class="proof-gallery">
-                                    <div class="proof-frame proof-frame--one">
-                                        <div class="proof-frame-glow"></div>
-                                        <div class="proof-frame-inner">
-                                            <img src="picture1.jpg" alt="Restaurant client TikTok & Instagram analytics dashboard" />
-                                        </div>
-                                        <div class="proof-frame-label">Platform Insights</div>
-                                    </div>
-                                    <div class="proof-frame proof-frame--two">
-                                        <div class="proof-frame-glow"></div>
-                                        <div class="proof-frame-inner">
-                                            <img src="picture2.jpg" alt="Restaurant client reach and views analytics dashboard" />
-                                        </div>
-                                        <div class="proof-frame-label">Reach & Growth</div>
-                                    </div>
-                                </div>
-
-                                <div class="proof-stats">
-                                    <div class="proof-stat">
-                                        <div class="proof-stat-head">
-                                            <span class="proof-stat-platform">TikTok</span>
-                                            <span class="proof-stat-up">+1,214.6%</span>
-                                        </div>
-                                        <strong class="proof-stat-value">339.5K</strong>
-                                        <p class="proof-stat-text">Post Views • +313.7K in 60 days</p>
-                                    </div>
-                                    <div class="proof-stat">
-                                        <div class="proof-stat-head">
-                                            <span class="proof-stat-platform">Instagram</span>
-                                            <span class="proof-stat-up">90.4% New</span>
-                                        </div>
-                                        <strong class="proof-stat-value">90,460</strong>
-                                        <p class="proof-stat-text">Content Views • 90.4% from non-followers</p>
-                                    </div>
-                                    <div class="proof-stat">
-                                        <div class="proof-stat-head">
-                                            <span class="proof-stat-platform">TikTok</span>
-                                            <span class="proof-stat-up">+331.1%</span>
-                                        </div>
-                                        <strong class="proof-stat-value">5.2K</strong>
-                                        <p class="proof-stat-text">Likes • 246 Comments • 202 Shares</p>
-                                    </div>
-                                    <div class="proof-stat">
-                                        <div class="proof-stat-head">
-                                            <span class="proof-stat-platform">Instagram</span>
-                                            <span class="proof-stat-up">Heavy Lifting</span>
-                                        </div>
-                                        <strong class="proof-stat-value">58.9K</strong>
-                                        <p class="proof-stat-text">Reel Views • 35,447 Total Viewers</p>
-                                    </div>
-                                </div>
-
-                                <div class="proof-footer">
-                                    <div class="proof-footer-line"></div>
-                                    <p class="proof-footer-text">Same funnel. New audience. Scalable to Italian Mall.</p>
-                                    <div class="proof-footer-line"></div>
-                                </div>
-                            </div>
-
-                        </div>
+                    <div class="proof-badge">
+                        <span>Aug 25 – Oct 23</span>
+                        <span class="proof-badge-dot"></span>
+                        <span>60 Days</span>
                     </div>
-                </article>
+                </div>
 
+                <div class="proof-gallery">
+                    <div class="proof-frame proof-frame--one">
+                        <div class="proof-frame-glow"></div>
+                        <div class="proof-frame-inner">
+                            <img src="picture1.jpg" alt="Restaurant client TikTok & Instagram analytics dashboard" />
+                        </div>
+                        <div class="proof-frame-label">Platform Insights</div>
+                    </div>
+                    <div class="proof-frame proof-frame--two">
+                        <div class="proof-frame-glow"></div>
+                        <div class="proof-frame-inner">
+                            <img src="picture2.jpg" alt="Restaurant client reach and views analytics dashboard" />
+                        </div>
+                        <div class="proof-frame-label">Reach & Growth</div>
+                    </div>
+                </div>
+
+                <div class="proof-stats">
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">TikTok</span>
+                            <span class="proof-stat-up">+1,214.6%</span>
+                        </div>
+                        <strong class="proof-stat-value">339.5K</strong>
+                        <p class="proof-stat-text">Post Views • +313.7K in 60 days</p>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">Instagram</span>
+                            <span class="proof-stat-up">90.4% New</span>
+                        </div>
+                        <strong class="proof-stat-value">90,460</strong>
+                        <p class="proof-stat-text">Content Views • 90.4% from non-followers</p>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">TikTok</span>
+                            <span class="proof-stat-up">+331.1%</span>
+                        </div>
+                        <strong class="proof-stat-value">5.2K</strong>
+                        <p class="proof-stat-text">Likes • 246 Comments • 202 Shares</p>
+                    </div>
+                    <div class="proof-stat">
+                        <div class="proof-stat-head">
+                            <span class="proof-stat-platform">Instagram</span>
+                            <span class="proof-stat-up">Heavy Lifting</span>
+                        </div>
+                        <strong class="proof-stat-value">58.9K</strong>
+                        <p class="proof-stat-text">Reel Views • 35,447 Total Viewers</p>
+                    </div>
+                </div>
+
+                <div class="proof-footer">
+                    <div class="proof-footer-line"></div>
+                    <p class="proof-footer-text">Same funnel. New audience. Scalable to Italian Mall.</p>
+                    <div class="proof-footer-line"></div>
+                </div>
             </div>
         </section>
 
@@ -1983,7 +2835,8 @@
                 <div class="eyebrow">Next Step</div>
                 <h2>Let’s Make Italian Mall <span class="gradient-text">Impossible to Ignore.</span></h2>
                 <p>
-                    Hypeif Media will create the content, amplify what works, and partner with the right creators to grow
+                    Hypeif Media will create the content, amplify what works, and partner with the right creators to
+                    grow
                     Italian Mall consistently with a strategy built to convert attention into real foot traffic.
                 </p>
                 <button class="btn" onclick="alert('Thank you! Hypeif Media will follow up with the full proposal.')">
@@ -2064,45 +2917,84 @@
             revealObserver.observe(el);
         });
 
-        document.querySelectorAll('.funnel-card').forEach((card, index) => {
-            revealObserver.observe(card);
-            card.style.transitionDelay = (index * 0.16) + 's';
+        document.querySelectorAll('.funnel-step').forEach((step, index) => {
+            revealObserver.observe(step);
+            step.style.transitionDelay = (index * 0.14) + 's';
         });
 
-        function animateConnectors() {
-            const line1 = document.querySelector('.connector-line--one');
-            const line2 = document.querySelector('.connector-line--two');
-            setTimeout(() => {
-                if (line1) {
-                    line1.style.height = '380px';
-                    line1.classList.add('active');
-                }
-            }, 600);
-            setTimeout(() => {
-                if (line2) {
-                    line2.style.height = '380px';
-                    line2.classList.add('active');
-                }
-            }, 900);
+        function toggleStage(stepNumber) {
+            const step = document.getElementById(`funnelTier${stepNumber}`);
+            if (!step || !step.querySelector('.funnel-details')) return;
+            const button = step.querySelector('.funnel-tier-header');
+            const isExpanded = step.classList.contains('expanded');
+            if (isExpanded) {
+                step.classList.remove('expanded');
+                if (button) button.setAttribute('aria-expanded', 'false');
+            } else {
+                step.classList.add('expanded');
+                if (button) button.setAttribute('aria-expanded', 'true');
+            }
+            updateToggleAllBtn();
         }
 
-        const tiltCards = document.querySelectorAll('.funnel-card:not(.funnel-card--static) .funnel-card-body');
-        tiltCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -3;
-                const rotateY = ((x - centerX) / centerX) * 3;
-                card.style.transform = `translateY(-10px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        function toggleAllStages() {
+            const expandableTiers = document.querySelectorAll('.funnel-tier-wrapper:has(.funnel-details)');
+            const anyCollapsed = Array.from(expandableTiers).some(tier => !tier.classList.contains('expanded'));
+
+            expandableTiers.forEach(tier => {
+                const btn = tier.querySelector('.funnel-tier-header');
+                if (anyCollapsed) {
+                    tier.classList.add('expanded');
+                    if (btn) btn.setAttribute('aria-expanded', 'true');
+                } else {
+                    tier.classList.remove('expanded');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            updateToggleAllBtn();
+        }
+
+        function updateToggleAllBtn() {
+            const btn = document.getElementById('toggleAllBtn');
+            if (!btn) return;
+            const expandableTiers = document.querySelectorAll('.funnel-tier-wrapper:has(.funnel-details)');
+            const allExpanded = expandableTiers.length > 0 && Array.from(expandableTiers).every(tier => tier.classList.contains('expanded'));
+            const icon = btn.querySelector('.toggle-icon');
+            const text = btn.querySelector('.toggle-text');
+            if (allExpanded) {
+                if (icon) icon.textContent = '–';
+                if (text) text.textContent = 'Collapse All Stages';
+            } else {
+                if (icon) icon.textContent = '+';
+                if (text) text.textContent = 'Expand All Stages';
+            }
+        }
+
+        function focusFunnelStage(stageNum) {
+            const pills = document.querySelectorAll('.stage-nav-pill');
+            pills.forEach((p, idx) => {
+                if (idx + 1 === stageNum) {
+                    p.classList.add('active');
+                } else {
+                    p.classList.remove('active');
+                }
             });
 
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = '';
-            });
-        });
+            const targetTier = document.getElementById(`funnelTier${stageNum}`);
+            if (targetTier) {
+                targetTier.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (targetTier.querySelector('.funnel-details') && !targetTier.classList.contains('expanded')) {
+                    toggleStage(stageNum);
+                }
+            }
+        }
+
+        function goToRecentClients() {
+            const clientSection = document.getElementById('recent-clients');
+            if (clientSection) {
+                clientSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
 
 
     </script>
